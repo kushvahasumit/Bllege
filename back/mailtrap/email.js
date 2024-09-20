@@ -26,13 +26,13 @@ export const sendWelcomeEmail = async (email, name) => {
 
     try {
         const response = await mailtrapClient.send({
-        from: sender,
-        to: recipient,
-        template_uuid: "f5e4b694-0cbd-47fb-b539-ced4d3e38276",
-        template_variables: {
+          from: sender,
+          to: recipient,
+          template_uuid: process.env.WELCOME_MAIL_ID,
+          template_variables: {
             company: "Bllege",
             name: name,
-            },
+          },
         });
 
         console.log("Welcome Email Sent Sucessfully!",response );
