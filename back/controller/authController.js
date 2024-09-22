@@ -5,10 +5,23 @@ import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetToken.js"
 import { sendResetEmail, sendResetSucessEmail, sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/email.js";
 import { User } from "../model/User.js";
 
+const generateRandomName = (length = 7) => {
+  const characters =
+    "ABCDEFGHIJKLMnopqrstuvwxyz012345@#$&()";
+  let randomName = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomName += characters[randomIndex];
+  }
+
+  return randomName;
+};
+
 export const signup = async (req, res) => {
-    const {email,password,name} = req.body;
+    const {email,password} = req.body;
     try {
-        if(!email || !password || !name){
+        if(!email || !password ){
             throw new Error("All Field are required");
         }
 
@@ -19,11 +32,13 @@ export const signup = async (req, res) => {
 
         const hashPassword = await bcryptjs.hash(password,10); //hashed in 10 digit 
         const verificationToken = generateVerification();
+        const randomName = generateRandomName();
+        console.log(randomName);
 
         const user = new User({
           email,
           password: hashPassword,
-          name,
+          name : randomName,
           verificationToken,
           verificationTokenExpireAt: Date.now() + 24*60*60*1000 // 24 hrs
         });
