@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function SignupForm() {
     const [email,setEmail] = useState("");
@@ -55,7 +56,7 @@ function SignupForm() {
         </div>
         <div className="border border-solid border-stone-200 mt-3" />
         <div className="flex items-center justify-center mt-1">
-            <p>Already a member? <strong>Sign in</strong> </p>
+            <p>Already a member? <strong> <Link to={"/login"} className="hover:underline">Sign in</Link> </strong> </p>
         </div>
         
       </form>
@@ -88,7 +89,7 @@ function ImageCarousel() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col relative items-start bg-blue-300">
+    <div className="w-full h-full flex flex-col relative items-start bg-blue-300 ">
       
 
       {/* Dots navigation below image*/}
@@ -122,7 +123,7 @@ function SignupPage() {
       </div>
 
       {/* Right side - Image carousel */}
-      <div className="w-2/3">
+      <div className="w-2/3 hidden sm:hidden md:block">
         <ImageCarousel />
       </div>
     </div>
