@@ -1,67 +1,115 @@
 import { useState, useEffect } from "react";
+import { Formik, Form, Field} from "formik";
+import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import Input from "../components/Input";
+import Login from "./Login";
 
 function SignupForm() {
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        console.log(email),
-        console.log(password)
-    }
-  return (
-    <div className="w-full h-full flex items-center justify-center ">
-      <form className="p-4 max-w-sm w-full">
-        <h2 className="text-3xl font-bold mb-6">Sign Up for Bllege</h2>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="email">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="shadow appearance-none border border-stone-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            // placeholder="Enter your email"
-            value={email}
-            onChange={(e)=> setEmail(e.target.value)}
-
-          />
-        </div>
-        <div className="mb-6">
-          <label className="block text-sm font-bold mb-2" htmlFor="password">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            className="shadow appearance-none  border border-stone-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            // placeholder="Enter your password"
-            value={password}
-            onChange={(e)=> setPassword(e.target.value)}
-          />
-        </div>
-
-        <div className="flex items-center justify-between">
-          <button
-            className="bg-black hover:bg-zinc-900 text-white  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-            type="button"
-            onClick={handleSubmit}
-          >
-            Sign Up
-          </button>
-        </div>
-        <div>
-            <p className="text-stone-400 text-xs mt-6">By creating an account, you agree to our <u> Terms </u> & <u> Privacy Policy</u> !</p>
-        </div>
-        <div className="border border-solid border-stone-200 mt-3" />
-        <div className="flex items-center justify-center mt-1">
-            <p>Already a member? <strong> <Link to={"/login"} className="hover:underline">Sign in</Link> </strong> </p>
-        </div>
+    const handleSubmit = async (values, {resetForm}) => {
+        setIsLoading(true);
+        console.log("Email:", values.email);
+        console.log("Password:", values.password);
         
-      </form>
-    </div>
-  );
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate loading
+        setIsLoading(false);
+        resetForm();
+    };
+
+    const validationSchema = Yup.object({
+        email: Yup.string().email("Invalid email address").required("Required"),
+        password: Yup.string()
+            .min(6, "Password must be at least 6 characters")
+            .required("Required"),
+    });
+
+    return (
+        <div className="w-full h-full flex items-center justify-center ">
+            <Formik
+                initialValues={{ email: "", password: "" }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit} 
+            >
+                {() => (
+                    <Form className="p-4 max-w-sm w-full">
+                        <h2 className="text-3xl font-bold mb-6">Sign Up for Bllege</h2>
+
+                        <div className="mb-4">
+                            <label className="block text-sm font-bold mb-2" htmlFor="email">
+                                Email
+                            </label>
+                            <Field
+                                id="email"
+                                name="email"
+                                type="email"
+                                component={Input}
+                                // placeholder="Enter your email"
+                            />
+                        </div>
+
+                        <div className="mb-6">
+                            <label className="block text-sm font-bold mb-2" htmlFor="password">
+                                Password
+                            </label>
+                            <Field
+                                type="password"
+                                id="password"
+                                name="password"
+                                component={Input}
+                                // placeholder="Enter your password"
+                            />
+                        </div>
+
+                        <motion.div
+                            className="flex items-center justify-between"
+                            initial={{ scale: 1 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <motion.button
+                                className="bg-black hover:bg-zinc-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                                type="submit"
+                                disabled={isLoading}
+                                whileHover={{ scale: 1.02 }}
+                            >
+                                {isLoading ? (
+                                    <motion.div
+                                        animate={{ rotate: 360 }}
+                                        transition={{ repeat: Infinity, duration: 1 }}
+                                        className="inline-block w-5 h-5 border-t-2 border-r-2 border-white border-solid rounded-full"
+                                    ></motion.div>
+                                ) : (
+                                    "Sign Up"
+                                )}
+                            </motion.button>
+                        </motion.div>
+
+                        <div>
+                            <p className="text-stone-400 text-xs mt-6">
+                                By creating an account, you agree to our <u> Terms </u> &{" "}
+                                <u> Privacy Policy</u> !
+                            </p>
+                        </div>
+
+                        <div className="border border-solid border-stone-200 mt-3" />
+                        <div className="flex items-center justify-center mt-1">
+                            <p>
+                                Already a member?{" "}
+                                <strong>
+                                    {" "}
+                                    <Link to={"/login"} className="hover:underline">
+                                        Sign in
+                                    </Link>{" "}
+                                </strong>{" "}
+                            </p>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
+        </div>
+    );
 }
 
 function ImageCarousel() {
@@ -74,16 +122,14 @@ function ImageCarousel() {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Automatically change the image every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
+    }, 3000);
 
-    return () => clearInterval(interval); // Cleanup on component unmount
+    return () => clearInterval(interval); 
   }, [images.length]);
 
-  // Handler to click on a dot and set image
   const handleDotClick = (index) => {
     setCurrentImageIndex(index);
   };
@@ -92,7 +138,6 @@ function ImageCarousel() {
     <div className="w-full h-full flex flex-col relative items-start bg-blue-300 ">
       
 
-      {/* Dots navigation below image*/}
       <div className="flex absolute m-20 space-x-2">
         {images.map((_, index) => (
           <span
@@ -117,12 +162,10 @@ function ImageCarousel() {
 function SignupPage() {
   return (
     <div className="h-screen flex">
-      {/* Left side - Signup form */}
       <div className="w-full">
         <SignupForm />
       </div>
 
-      {/* Right side - Image carousel */}
       <div className="w-2/3 hidden sm:hidden md:block">
         <ImageCarousel />
       </div>

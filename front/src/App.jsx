@@ -1,6 +1,8 @@
 import { Routes,Route } from "react-router-dom";
 
 import SignupPage from "./pages/SignUp";
+import Login from "./pages/Login";
+
 
 function App() {
   return (
@@ -8,8 +10,8 @@ function App() {
       <Routes>
         <Route path="/" element={"home"} />
         <Route path="/sign-up" element={<SignupPage />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
-      
     </div>
   );
 }
