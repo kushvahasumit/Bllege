@@ -1,22 +1,30 @@
 import { useState, useEffect } from "react";
 import { Formik, Form, Field} from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
-import Login from "./Login";
+import { useAuthStore } from "../store/authStore";
 
 function SignupForm() {
     const [isLoading, setIsLoading] = useState(false);
+    const {signUp} = useAuthStore();
+    const navigate = useNavigate();
 
-    const handleSubmit = async (values, {resetForm}) => {
+    const handleSubmit = async (values) => {
+      try {
         setIsLoading(true);
         console.log("Email:", values.email);
         console.log("Password:", values.password);
         
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate loading
+        await signUp(values.email,values.password); // Simulate loading
         setIsLoading(false);
-        resetForm();
+        navigate("/email-verification");
+
+      } catch (error) {
+        console.log(error);
+      }
+        
     };
 
     const validationSchema = Yup.object({

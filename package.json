@@ -15,6 +15,7 @@
     "bcryptjs": "^2.4.3",
     "bllege": "file:",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
