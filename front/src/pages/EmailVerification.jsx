@@ -8,22 +8,18 @@ const EmailVerification = () => {
   const inputRef = useRef([]);
   const navigate = useNavigate();
 
-  // Handle input change for OTP fields
   const handleChange = (index, value) => {
     if (/^[0-9]$/.test(value)) {
-      // Allow only digits
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
 
-      // Move to the next input field
       if (index < otp.length - 1 && value !== "") {
         inputRef.current[index + 1].focus();
       }
     }
   };
 
-  // Handle key down event (e.g., backspace)
   const handleKeyDown = (index, e) => {
     if (e.key === "Backspace") {
       if (otp[index] === "" && index > 0) {
@@ -35,18 +31,17 @@ const EmailVerification = () => {
     }
   };
 
-  // Handle form submission (OTP verification)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate an API call for verification
+    //API call for verification
     setTimeout(() => {
       setIsLoading(false);
       const enteredOtp = otp.join("");
       console.log("OTP entered:", enteredOtp);
 
-      // Navigate to another page after successful verification
+      // after sucess of otp
       navigate("/success");
     }, 2000);
   };
