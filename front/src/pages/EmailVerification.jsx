@@ -1,12 +1,14 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 const EmailVerification = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef([]);
   const navigate = useNavigate();
+  const { verificationEmail } = useAuthStore();
 
   const handleChange = (index, value) => {
     if (/^[0-9]$/.test(value)) {
@@ -33,17 +35,25 @@ const EmailVerification = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
+    
+    const enteredOtp = otp.join("");
+    try {
+        setIsLoading(false);
+        await verificationEmail(enteredOtp);
+        navigate("/");
+      } catch (error) {
+        console.log("otp Error :",error);
+      }
     //API call for verification
-    setTimeout(() => {
-      setIsLoading(false);
-      const enteredOtp = otp.join("");
-      console.log("OTP entered:", enteredOtp);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+      
 
-      // after sucess of otp
-      navigate("/success");
-    }, 2000);
+    //   console.log("OTP entered:", enteredOtp);
+      
+    //   // after sucess of otp
+      
+    // }, 2000);
   };
 
   return (
