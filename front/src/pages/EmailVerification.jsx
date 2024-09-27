@@ -44,16 +44,7 @@ const EmailVerification = () => {
       } catch (error) {
         console.log("otp Error :",error);
       }
-    //API call for verification
-    // setTimeout(() => {
-    //   setIsLoading(false);
-      
 
-    //   console.log("OTP entered:", enteredOtp);
-      
-    //   // after sucess of otp
-      
-    // }, 2000);
   };
 
   return (

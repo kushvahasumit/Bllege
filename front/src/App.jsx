@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import Emailverification from "./pages/EmailVerification";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
+import Dashboard from "./pages/Dashboard";
+import LoadingSpinner from "./pages/LoadingSpinner";
 
 //redirect user to home 
 const RedirectAuthenticatedUser = ({children}) => {
@@ -43,11 +45,11 @@ function App() {
   console.log("isCheckAUth", isCheckAuthenticated);
   console.log("user", user);
 
-
+  if(isCheckAuthenticated) return <LoadingSpinner />;
   return (
     <div className=" bg-slate text-black overflow-hidden">
       <Routes>
-        <Route path="/" element={"home"} />
+        <Route path="/" element={<Dashboard />} />
         <Route
           path="/sign-up"
           element={

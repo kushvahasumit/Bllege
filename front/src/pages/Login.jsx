@@ -4,9 +4,11 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
+import { useAuthStore } from "../store/authStore";
 
 function Login() {
       const [isLoading, setIsLoading] = useState(false);
+      const {logIn, error} = useAuthStore();
 
       const validationSchema = Yup.object({
         email: Yup.string().email("Invalid email address").required("Required"),
@@ -16,13 +18,19 @@ function Login() {
       });
       
       const handleSubmit = async (values, { resetForm }) => {
-        setIsLoading(true);
-        console.log("Email:", values.email);
-        console.log("Password:", values.password);
 
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate loading
-        setIsLoading(false);
-        resetForm();
+        try {
+          console.log("Email:", values.email);
+          console.log("Password:", values.password);
+          setIsLoading(true);
+          await logIn(values.email, values.password);
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error)
+        }
+       
+        
+
       };
   return (
     <>
@@ -65,6 +73,7 @@ function Login() {
                   // placeholder="Enter your password"
                 />
               </div>
+              {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
               <motion.div
                 className="flex items-center justify-between"
