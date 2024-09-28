@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Dashboard from "./pages/Dashboard";
 import LoadingSpinner from "./pages/LoadingSpinner";
 import ForgetPassword from "./pages/ForgetPassword";
+import Resetpass from "./pages/Resetpass";
 
 //redirect user to home 
 const RedirectAuthenticatedUser = ({children}) => {
@@ -82,7 +83,15 @@ function App() {
             <RedirectAuthenticatedUser>
               <ForgetPassword />
             </RedirectAuthenticatedUser>
-              
+          }
+        />
+
+        <Route
+          path="/reset-password"
+          element={
+            <RedirectAuthenticatedUser>
+              <Resetpass />
+            </RedirectAuthenticatedUser>
           }
         />
       </Routes>
