@@ -28,8 +28,8 @@ const ProtectAuthenticatedUser = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if(!user.isVerified){
-    return <Navigate to="/email-verification" replace />
+  if (user.isVerified) {
+    return <Navigate to="/" replace />;
   }
 
   return children;
@@ -71,9 +71,9 @@ function App() {
         <Route
           path="/email-verification"
           element={
-            <ProtectAuthenticatedUser>
+             <ProtectAuthenticatedUser>
               <Emailverification />
-            </ProtectAuthenticatedUser>
+            </ProtectAuthenticatedUser> 
           }
         />
 
@@ -87,7 +87,7 @@ function App() {
         />
 
         <Route
-          path="/reset-password"
+          path="/reset-password/:token"
           element={
             <RedirectAuthenticatedUser>
               <Resetpass />
