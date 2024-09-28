@@ -6,6 +6,7 @@ import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
 import Dashboard from "./pages/Dashboard";
 import LoadingSpinner from "./pages/LoadingSpinner";
+import ForgetPassword from "./pages/ForgetPassword";
 
 //redirect user to home 
 const RedirectAuthenticatedUser = ({children}) => {
@@ -66,11 +67,24 @@ function App() {
             </RedirectAuthenticatedUser>
           }
         />
-        <Route path="/email-verification" element={
-          <ProtectAuthenticatedUser>
-            <Emailverification />
-          </ProtectAuthenticatedUser>
-        } />
+        <Route
+          path="/email-verification"
+          element={
+            <ProtectAuthenticatedUser>
+              <Emailverification />
+            </ProtectAuthenticatedUser>
+          }
+        />
+
+        <Route
+          path="/forget-password"
+          element={
+            <RedirectAuthenticatedUser>
+              <ForgetPassword />
+            </RedirectAuthenticatedUser>
+              
+          }
+        />
       </Routes>
     </div>
   );

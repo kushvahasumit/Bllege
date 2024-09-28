@@ -9,6 +9,7 @@ export const useAuthStore = create((set) => ({
   isAuthenticated: false,
   error: null,
   isLoading: false,
+  message :null,
   isCheckAuthenticated: true, //is user authenticated to show either signup or signin
 
   signUp: async (email, password) => {
@@ -112,6 +113,49 @@ export const useAuthStore = create((set) => ({
           isAuthenticated:false
         });
         throw error;
+    }
+  },
+
+  forgetPassword: async (email) =>{
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.post(`${API_URL}/api/auth/forget-password`, {
+        email,
+      });
+      console.log(response);
+      set({
+        message: response.data.message,
+        isLoading: false,
+      });
+    } catch (error) {
+      set({
+        error: error.response.data.message || "Error ",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  resetPassword: async (token,password) =>{
+    set({isLoading:true, error:null, message: null});
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/auth//reset-password/${token}`,
+        {
+          password
+        }
+      );
+      console.log(response);
+      set({
+        message: response.data.message,
+        isLoading: false,
+      });
+    } catch (error) {
+      set({
+        error: error.response.data.message || "Error ",
+        isLoading: false,
+      });
+      throw error;
     }
   }
 }));
