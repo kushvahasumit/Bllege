@@ -34,7 +34,7 @@ function Login() {
       };
   return (
     <>
-      <div className="w-full h-full flex items-center justify-center ">
+      <div className="w-full h-full flex items-center justify-center">
         <Formik
           initialValues={{ email: "", password: "" }}
           onSubmit={handleSubmit}
@@ -100,7 +100,15 @@ function Login() {
 
               <div>
                 <p className="text-stone-400 flex justify-center text-xs mt-6">
-                  <strong><Link to={"/forget-password"} className="pr-2 hover:underline">forget password?</Link></strong> Dont't worry!
+                  <strong>
+                    <Link
+                      to={"/forget-password"}
+                      className="pr-2 hover:underline"
+                    >
+                      forget password?
+                    </Link>
+                  </strong>{" "}
+                  Dont't worry!
                 </p>
               </div>
 

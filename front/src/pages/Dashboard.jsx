@@ -17,7 +17,7 @@ const Dashboard = () => {
     
   };
   return (
-    <div className="flex justify-center items-center w-full">
+    <div className="flex justify-center items-center w-full h-full">
       <h1>Hello Dev</h1>
       <div>
         {" "}

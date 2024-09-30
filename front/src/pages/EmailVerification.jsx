@@ -70,7 +70,7 @@ const EmailVerification = () => {
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-12 text-center text-2xl font-bold bg-gray-400 text-white border-2 border-stone-500 rounded-lg focus:border-white focus:outline-none"
+                className="w-12 h-12 text-center text-2xl font-bold bg-gray-500 text-white border-2 border-teal-700 rounded-lg focus:border-white focus:outline-none "
               />
             ))}
           </div> 

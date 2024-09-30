@@ -28,12 +28,8 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div>
-      <div className="p-4">
-        <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-black to-gray-700 text-transparent bg-clip-text ">
-          Forget Password
-        </h2>
-
+    <div className="w-full h-full flex justify-center items-center ">
+      <div className="">
         {!isSubmit ? (
           <Formik
             initialValues={{ email: "" }}
@@ -44,18 +40,21 @@ const ForgetPassword = () => {
             }}
           >
             {({ handleSubmit }) => (
-              <Form onSubmit={handleSubmit} className='text-center'>
+              <Form onSubmit={handleSubmit} className="text-center">
+                <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-black to-gray-700 text-transparent bg-clip-text ">
+                  Forget Password
+                </h2>
                 <p className="text-gray-600 mb-6">
                   Enter your email address, and we'll send you a reset link.
                 </p>
-                
+
                 {/* Custom Input component integrated with Formik */}
                 <Field
                   name="email"
                   type="text"
                   placeholder="Email"
                   component={Input}
-                  value = {email}
+                  value={email}
                 />
 
                 <motion.div>
@@ -76,6 +75,14 @@ const ForgetPassword = () => {
                     )}
                   </motion.button>
                 </motion.div>
+                <div className="px-8 py-8 flex justify-center ">
+                  <Link
+                    to="/login"
+                    className="text-sm text-black hover:underline flex items-center"
+                  >
+                    <ArrowLeft className="h-3 w-4 mr-2" /> Back to Login
+                  </Link>
+                </div>
               </Form>
             )}
           </Formik>
@@ -87,21 +94,23 @@ const ForgetPassword = () => {
               transition={{ type: "spring", stiffness: 500, damping: 30 }}
               className="w-20 h-20 rounded-full bg-black flex items-center justify-center mx-auto mb-4"
             >
-            <Mail className='h-12 w-12 text-white ' />
+              <Mail className="h-12 w-12 text-white " />
             </motion.div>
-            
+
             <p className="text-gray-500 mb-6">
               If a account exist for {email}, you will receive a password reset
               link shortly.
             </p>
+            <div className="px-8 py-8 flex justify-center ">
+              <Link
+                to="/login"
+                className="text-sm text-black hover:underline flex items-center"
+              >
+                <ArrowLeft className="h-3 w-4 mr-2" /> Back to Login
+              </Link>
+            </div>
           </div>
         )}
-      </div>
-
-      <div className="px-8 py-2 flex justify-center ">
-        <Link to="/login" className="text-sm text-black hover:underline flex items-center">
-        <ArrowLeft className='h-3 w-4 mr-2' /> Back to Login
-        </Link>
       </div>
     </div>
   );
