@@ -37,6 +37,7 @@ function Login() {
       <div className="w-full h-full flex items-center justify-center">
         <Formik
           initialValues={{ email: "", password: "" }}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {() => (

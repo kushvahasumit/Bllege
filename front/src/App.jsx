@@ -1,4 +1,4 @@
-import { Routes,Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import SignupPage from "./pages/SignUp";
 import Login from "./pages/Login";
 import Emailverification from "./pages/EmailVerification";
@@ -8,7 +8,6 @@ import Dashboard from "./pages/Dashboard";
 import LoadingSpinner from "./pages/LoadingSpinner";
 import ForgetPassword from "./pages/ForgetPassword";
 import Resetpass from "./pages/Resetpass";
-import { Image } from "lucide-react";
 
 //redirect user to home 
 const RedirectAuthenticatedUser = ({children}) => {
@@ -84,7 +83,7 @@ function ImageCarousel() {
 
 function App() {
   const { isCheckAuthenticated, checkUserAuth ,user, isAuthenticated} = useAuthStore();
-
+  const location = useLocation(); 
   useEffect(()=>{
     checkUserAuth();
   },[checkUserAuth]);
@@ -95,7 +94,7 @@ function App() {
 
   if(isCheckAuthenticated) return <LoadingSpinner />;
   return (
-    <div className="h-screen flex bg-slate text-black overflow-hidden">
+    <div className="h-screen flex bg-offWhite text-black overflow-hidden">
       <div className="w-full">
         <Routes>
           <Route path="/" element={<Dashboard />} />
@@ -143,9 +142,11 @@ function App() {
           />
         </Routes>
       </div>
-      <div className="w-2/3 hidden sm:hidden md:block">
-        <ImageCarousel />
-      </div>
+      {location.pathname !== "/" && (
+        <div className="w-2/3 hidden sm:hidden md:block">
+          <ImageCarousel />
+        </div>
+      )}
     </div>
   );
 }

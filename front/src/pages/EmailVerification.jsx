@@ -70,11 +70,11 @@ const EmailVerification = () => {
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-12 text-center text-2xl font-bold bg-gray-500 text-white border-2 border-teal-700 rounded-lg focus:border-white focus:outline-none "
+                className="w-12 h-12 text-center text-2xl font-bold bg-gray-500 text-white border-2 border-lostSouls rounded-lg focus:border-white focus:outline-none "
               />
             ))}
-          </div> 
-          
+          </div>
+
           <motion.div>
             <motion.button
               className="bg-black hover:bg-zinc-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
