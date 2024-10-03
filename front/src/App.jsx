@@ -94,7 +94,7 @@ function App() {
 
   if(isCheckAuthenticated) return <LoadingSpinner />;
   return (
-    <div className="h-screen flex bg-offWhite text-black overflow-hidden">
+    <div className="h-screen flex bg-ofFwhite text-black overflow-hidden">
       <div className="w-full">
         <Routes>
           <Route path="/" element={<Dashboard />} />

@@ -1,46 +1,58 @@
 import React from "react";
-// import { LucidLogo } from "lucid-react"; // Assuming you're using Lucid's logo component
+import { Briefcase, ChartArea, ChartBar, ChartBarIncreasingIcon, ChartNoAxesCombined, Home, Star } from "lucide-react";
 
 const Nav = () => {
   return (
-    <nav className="shadow-md px-6 py-4 flex items-center ">
-      {/* Logo Section */}
+    <nav className="shadow-md px-6 py-2 flex items-center space-x-4">
       <div className="flex items-center">
-        {/* <LucidLogo className="h-10 w-10" /> Lucid logo */}
-        <span className="ml-3 text-xl font-semibold">Brand Name</span>
-      </div>
-
-      {/* Search Bar */}
-      <div className="hidden md:flex items-center w-1/3">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-full py-2 px-4 border border-gray-300 rounded-lg"
+        <img
+          src="./src/images/bgrsm.png"
+          alt="BllegeLogo"
+          className="h-12 w-14"
         />
       </div>
 
-      {/* Navigation Links */}
-      <ul className="hidden md:flex items-center space-x-6">
-        <li className="text-gray-700 hover:text-black">
-          <a href="/">Home</a>
+      <div className="hidden md:flex items-center">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="w-52 py-2 px-4 border border-gray-300 rounded-3xl focus:outline-none  focus:ring-0 focus:border-gray-300"
+        /> 
+      </div>
+
+      <ul className="flex-grow hidden md:flex items-center justify-center space-x-8">
+        <li className="text-gray-700 hover:text-black flex flex-col justify-center items-center">
+          <Home className="" />
+          <a href="/" className="text-center">
+            Community
+          </a>
         </li>
-        <li className="text-gray-700 hover:text-black">
-          <a href="/about">About</a>
+        <li className="text-gray-700 pl-3 hover:text-black flex flex-col justify-center items-center">
+          <Briefcase className="" />
+          <a href="/" className="text-center">
+            Placements
+          </a>
         </li>
-        <li className="text-gray-700 hover:text-black">
-          <a href="/services">Services</a>
+        <li className="text-gray-700 pl-3 hover:text-black flex flex-col justify-center items-center">
+          <Star className="" />
+          <a href="/" className="text-center">
+            Reviews
+          </a>
         </li>
-        <li className="text-gray-700 hover:text-black">
-          <a href="/contact">Contact</a>
+
+        <li className="text-gray-700 pl-3 hover:text-black flex flex-col justify-center items-center">
+          <ChartNoAxesCombined className="" />
+          <a href="/" className="text-center">
+            Trends
+          </a>
         </li>
       </ul>
 
-      {/* Sign In / Sign Up */}
       <div className="flex space-x-4">
-        <button className="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded-lg hover:bg-blue-500 hover:text-white">
+        <button className="bg-transparent border border-lostSouls text-lostSouls px-4 py-2 rounded-lg hover:bg-lostSouls hover:text-white">
           Sign In
         </button>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+        <button className="bg-lostSouls text-white px-4 py-2 rounded-lg hover:bg-lostSouls">
           Sign Up
         </button>
       </div>
