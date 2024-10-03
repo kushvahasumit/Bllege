@@ -3,7 +3,7 @@ const Input = ({ field, form, ...props }) => {
     <div className="mb-6">
       <input
         {...field} // This includes value and onChange from Formik
-        {...props} // This includes other props like type, placeholder, etc.
+        {...props}
         className="shadow appearance-none border border-stone-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       />
       
