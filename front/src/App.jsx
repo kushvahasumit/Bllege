@@ -9,6 +9,8 @@ import LoadingSpinner from "./pages/LoadingSpinner";
 import ForgetPassword from "./pages/ForgetPassword";
 import Resetpass from "./pages/Resetpass";
 import ImageCarousel from "./pages/ImageCarousel";
+import Feed from "./pages/dashboardPages/Feed";
+import Trending from "./pages/dashboardPages/Trending";
 
 //redirect user to home 
 const RedirectAuthenticatedUser = ({children}) => {
@@ -54,6 +56,17 @@ function App() {
       <div className="w-full">
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="feed" element={
+            <RedirectAuthenticatedUser>
+                <Feed />
+              </RedirectAuthenticatedUser>
+            
+            } />
+          <Route path="trending" element={
+            <RedirectAuthenticatedUser>
+                <Trending />
+              </RedirectAuthenticatedUser>
+            } />
           <Route
             path="/sign-up"
             element={

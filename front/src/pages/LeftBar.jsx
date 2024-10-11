@@ -16,12 +16,12 @@ const LeftBar = () => {
 
     const lowerSections = [
       {
-    //     title: "INDUSTRIES",
-    //     links: [
-    //       { name: "Tech", to: "/industries/tech" },
-    //       { name: "Healthcare", to: "/industries/healthcare" },
-    //       { name: "Commerce", to: "/industries/commerce" },
-    //     ],
+        title: "INDUSTRIES",
+        links: [
+          { name: "Tech", to: "/industries/tech" },
+          { name: "Healthcare", to: "/industries/healthcare" },
+          { name: "Commerce", to: "/industries/commerce" },
+        ],
        },
       {
         title: "JOB GROUPS",
