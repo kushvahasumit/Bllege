@@ -1,5 +1,5 @@
 import React from "react";
-import { Briefcase, ChartArea, ChartBar, ChartBarIncreasingIcon, ChartNoAxesCombined, Home, Star } from "lucide-react";
+import { Briefcase, ChartNoAxesCombined, Home, Star } from "lucide-react";
 
 const Nav = () => {
   return (

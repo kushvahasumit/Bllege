@@ -51,22 +51,16 @@ function App() {
   console.log("user", user);
 
   if(isCheckAuthenticated) return <LoadingSpinner />;
+  const shouldShowImageCarousel = !isAuthenticated || !user?.isVerified;
+  
   return (
     <div className="h-screen flex bg-ofFwhite text-black overflow-hidden">
       <div className="w-full">
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="feed" element={
-            <RedirectAuthenticatedUser>
-                <Feed />
-              </RedirectAuthenticatedUser>
-            
-            } />
-          <Route path="trending" element={
-            <RedirectAuthenticatedUser>
-                <Trending />
-              </RedirectAuthenticatedUser>
-            } />
+          <Route path="/" element={<Dashboard />}>
+            <Route path="feed" element={<Feed />} />
+            <Route path="trending" element={<Trending />} />
+          </Route>
           <Route
             path="/sign-up"
             element={
@@ -111,7 +105,7 @@ function App() {
           />
         </Routes>
       </div>
-      {location.pathname !== "/" && (
+      {shouldShowImageCarousel && (
         <div className="w-2/3 hidden sm:hidden md:block">
           <ImageCarousel />
         </div>
