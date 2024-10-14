@@ -11,9 +11,23 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 
 const Nav = ({ user, logOut }) => {
+
+  const navLinks = [
+    { name: "Community", to: "/", icon: <Home /> },
+    { name: "Placements", to: "/placements", icon: <Briefcase /> },
+    { name: "Reviews", to: "/reviews", icon: <Star /> },
+    { name: "Trends", to: "/trends", icon: <ChartNoAxesCombined /> },
+  ];
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedPage,setSelectedPage] = useState("/");
   const navigate = useNavigate();
 
+  const handleClickPage = (to) => {
+    setSelectedPage(to);
+    navigate(to); 
+  };
+   
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -22,7 +36,7 @@ const Nav = ({ user, logOut }) => {
   const handleLogout = async () => {
     try {
       await logOut();
-      navigate("/login");
+      // navigate("/login");
     } catch (error) {
       console.log(error);
     }
@@ -57,30 +71,22 @@ const Nav = ({ user, logOut }) => {
       </div>
 
       <ul className="flex-grow hidden md:flex items-center justify-center space-x-8">
-        <li className="text-gray-700 hover:text-black flex flex-col justify-center items-center">
-          <Home />
-          <Link to="/" className="text-center">
-            Community
-          </Link>
-        </li>
-        <li className="text-gray-700 pl-3 hover:text-black flex flex-col justify-center items-center">
-          <Briefcase />
-          <Link to="/placements" className="text-center">
-            Placements
-          </Link>
-        </li>
-        <li className="text-gray-700 pl-3 hover:text-black flex flex-col justify-center items-center">
-          <Star />
-          <Link to="/reviews" className="text-center">
-            Reviews
-          </Link>
-        </li>
-        <li className="text-gray-700 pl-3 hover:text-black flex flex-col justify-center items-center">
-          <ChartNoAxesCombined />
-          <Link to="/trends" className="text-center">
-            Trends
-          </Link>
-        </li>
+        {navLinks.map((link, index) => (
+          <li
+            key={index}
+            className={`flex flex-col justify-center items-center ${
+              selectedPage === link.to
+                ? "text-black border-b-2 border-lostSouls p-1"
+                : "text-gray-700"
+            }`}
+            onClick={() => handleClickPage(link.to)} // Handle click to set selected page
+          >
+            {link.icon}
+            <Link to={link.to} className="text-center">
+              {link.name}
+            </Link>
+          </li>
+        ))}
       </ul>
 
       <div className="flex space-x-4 relative">

@@ -104,7 +104,7 @@ function Login() {
                   <strong>
                     <Link
                       to={"/forget-password"}
-                      className="pr-2 hover:underline"
+                      className="pr-2 text-blue-600 hover:underline"
                     >
                       forget password?
                     </Link>

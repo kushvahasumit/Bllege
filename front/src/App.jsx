@@ -54,11 +54,10 @@ function App() {
   console.log("isCheckAuthenticated:", isCheckAuthenticated);
   console.log("user:", user);
 
-  // Show loading spinner while checking authentication
   if (isCheckAuthenticated) return <LoadingSpinner />;
 
-  // Show image carousel only for non-authenticated or non-verified users
-  const shouldShowImageCarousel = !isAuthenticated || !user?.isVerified;
+  const shouldShowImageCarousel =
+    (!isAuthenticated || !user?.isVerified) && location.pathname !== "/";
 
   return (
     <div className="h-screen flex bg-ofFwhite text-black overflow-hidden">
@@ -116,7 +115,6 @@ function App() {
         </Routes>
       </div>
 
-      {/* Show the image carousel for unauthenticated or unverified users */}
       {shouldShowImageCarousel && (
         <div className="w-2/3 hidden sm:hidden md:block">
           <ImageCarousel />
