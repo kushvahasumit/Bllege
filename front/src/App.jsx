@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import SignupPage from "./pages/SignUp";
 import Login from "./pages/Login";
-import Emailverification from "./pages/EmailVerification";
+import EmailVerification from "./pages/EmailVerification";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
 import Dashboard from "./pages/Dashboard";
@@ -12,47 +12,54 @@ import ImageCarousel from "./pages/ImageCarousel";
 import Feed from "./pages/dashboardPages/Feed";
 import Trending from "./pages/dashboardPages/Trending";
 
-//redirect user to home 
-const RedirectAuthenticatedUser = ({children}) => {
-  const {isAuthenticated, user} = useAuthStore();
-
-  if (isAuthenticated && user.isVerified) {
-    return <Navigate to="/" replace />;
-  }
-
-  return children;
-}
-
-//protect route for authentication
-const ProtectAuthenticatedUser = ({ children }) => {
+// Redirect if the user is authenticated and verified
+const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
 
-  if (!isAuthenticated ) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (user.isVerified) {
+  if (isAuthenticated && user?.isVerified) {
     return <Navigate to="/" replace />;
   }
 
   return children;
 };
 
+// Protect route for authentication and verification
+const ProtectAuthenticatedUser = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
+  // If not authenticated, redirect to login
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // If authenticated but not verified, redirect to email verification
+  if (!user?.isVerified) {
+    return <Navigate to="/email-verification" replace />;
+  }
+
+  // If authenticated and verified, render the children
+  return children;
+};
 
 function App() {
-  const { isCheckAuthenticated, checkUserAuth ,user, isAuthenticated} = useAuthStore();
-  const location = useLocation(); 
-  useEffect(()=>{
-    checkUserAuth();
-  },[checkUserAuth]);
+  const { isCheckAuthenticated, checkUserAuth, user, isAuthenticated } =
+    useAuthStore();
+  const location = useLocation();
 
-  console.log("isAUth", isAuthenticated);
-  console.log("isCheckAUth", isCheckAuthenticated);
-  console.log("user", user);
+  useEffect(() => {
+    checkUserAuth(); // Check authentication on app load
+  }, [checkUserAuth]);
 
-  if(isCheckAuthenticated) return <LoadingSpinner />;
+  console.log("isAuthenticated:", isAuthenticated);
+  console.log("isCheckAuthenticated:", isCheckAuthenticated);
+  console.log("user:", user);
+
+  // Show loading spinner while checking authentication
+  if (isCheckAuthenticated) return <LoadingSpinner />;
+
+  // Show image carousel only for non-authenticated or non-verified users
   const shouldShowImageCarousel = !isAuthenticated || !user?.isVerified;
-  
+
   return (
     <div className="h-screen flex bg-ofFwhite text-black overflow-hidden">
       <div className="w-full">
@@ -61,6 +68,7 @@ function App() {
             <Route path="feed" element={<Feed />} />
             <Route path="trending" element={<Trending />} />
           </Route>
+
           <Route
             path="/sign-up"
             element={
@@ -69,6 +77,7 @@ function App() {
               </RedirectAuthenticatedUser>
             }
           />
+
           <Route
             path="/login"
             element={
@@ -77,11 +86,12 @@ function App() {
               </RedirectAuthenticatedUser>
             }
           />
+
           <Route
             path="/email-verification"
             element={
               <ProtectAuthenticatedUser>
-                <Emailverification />
+                <EmailVerification />
               </ProtectAuthenticatedUser>
             }
           />
@@ -105,6 +115,8 @@ function App() {
           />
         </Routes>
       </div>
+
+      {/* Show the image carousel for unauthenticated or unverified users */}
       {shouldShowImageCarousel && (
         <div className="w-2/3 hidden sm:hidden md:block">
           <ImageCarousel />

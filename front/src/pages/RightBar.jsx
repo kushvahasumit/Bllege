@@ -78,7 +78,7 @@ const RightBar = () => {
           ))}
       </ul>
 
-      <div className=" pt-3 text-gray-600">
+      <div className=" text-gray-600">
         {footerLinks.map((link, index) => (
           <span key={index}>
             <Link to={link.to} className="text-sm  hover:text-black">
@@ -87,7 +87,7 @@ const RightBar = () => {
             {index < footerLinks.length - 1 && " · "}
           </span>
         ))}
-        <p className="mt-2 mb-10">
+        <p className="mt-2 mb-14">
         2024 Team <strong className="text-lostSouls">Bllege</strong> inc.
       </p>
       </div>

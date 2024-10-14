@@ -1,7 +1,43 @@
-import React from "react";
-import { Briefcase, ChartNoAxesCombined, Home, Star } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import {
+  Briefcase,
+  ChartNoAxesCombined,
+  Home,
+  LogOut,
+  SquarePen,
+  Star,
+  UserCircle,
+} from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 
-const Nav = () => {
+const Nav = ({ user, logOut }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // Function to toggle dropdown visibility
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const closeDropdown = (e) => {
+      if (!e.target.closest(".dropdown")) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("click", closeDropdown);
+    return () => document.removeEventListener("click", closeDropdown);
+  }, []);
+
   return (
     <nav className="shadow-md px-6 py-2 flex items-center space-x-4">
       <div className="flex items-center">
@@ -17,44 +53,72 @@ const Nav = () => {
           type="text"
           placeholder="Search..."
           className="w-52 py-2 px-4 border border-gray-300 rounded-3xl focus:outline-none  focus:ring-0 focus:border-gray-300"
-        /> 
+        />
       </div>
 
       <ul className="flex-grow hidden md:flex items-center justify-center space-x-8">
         <li className="text-gray-700 hover:text-black flex flex-col justify-center items-center">
-          <Home className="" />
-          <a href="/" className="text-center">
+          <Home />
+          <Link to="/" className="text-center">
             Community
-          </a>
+          </Link>
         </li>
         <li className="text-gray-700 pl-3 hover:text-black flex flex-col justify-center items-center">
-          <Briefcase className="" />
-          <a href="/" className="text-center">
+          <Briefcase />
+          <Link to="/placements" className="text-center">
             Placements
-          </a>
+          </Link>
         </li>
         <li className="text-gray-700 pl-3 hover:text-black flex flex-col justify-center items-center">
-          <Star className="" />
-          <a href="/" className="text-center">
+          <Star />
+          <Link to="/reviews" className="text-center">
             Reviews
-          </a>
+          </Link>
         </li>
-
         <li className="text-gray-700 pl-3 hover:text-black flex flex-col justify-center items-center">
-          <ChartNoAxesCombined className="" />
-          <a href="/" className="text-center">
+          <ChartNoAxesCombined />
+          <Link to="/trends" className="text-center">
             Trends
-          </a>
+          </Link>
         </li>
       </ul>
 
-      <div className="flex space-x-4">
-        <button className="bg-transparent border border-lostSouls text-lostSouls px-4 py-2 rounded-lg hover:bg-lostSouls hover:text-white">
-          Sign In
-        </button>
-        <button className="bg-lostSouls text-white px-4 py-2 rounded-lg hover:bg-lostSouls">
-          Sign Up
-        </button>
+      <div className="flex space-x-4 relative">
+        {user ? (
+          <div className="flex space-x-4 relative dropdown">
+            <button className="bg-lostSouls flex text-white px-4 py-2 rounded-lg hover:bg-lostSouls">
+              <SquarePen className="mr-2" />
+              Bleege Post
+            </button>
+
+            <UserCircle
+              className="h-10 w-10 text-gray-700 cursor-pointer"
+              onClick={toggleDropdown}
+            />
+
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                <button
+                  className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-gray-100"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="mr-2" />
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            <button className="bg-transparent border border-lostSouls text-lostSouls px-4 py-2 rounded-lg hover:bg-lostSouls hover:text-white">
+              <Link to="/login">Sign In</Link>
+            </button>
+
+            <button className="bg-lostSouls text-white px-4 py-2 rounded-lg hover:bg-lostSouls">
+              <Link to="/sign-up">Sign Up</Link>
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );
