@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from "../../store/authStore";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
-import Input from '../components/Input';
+import Input from "../../components/Input";
 import { Link } from 'react-router-dom';
 import {ArrowLeft, Mail} from 'lucide-react';
 

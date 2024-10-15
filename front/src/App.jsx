@@ -1,16 +1,20 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import SignupPage from "./pages/SignUp";
-import Login from "./pages/Login";
-import EmailVerification from "./pages/EmailVerification";
+import SignupPage from "./pages/authpages/SignUp";
+import Login from "./pages/authpages/Login";
+import EmailVerification from "./pages/authpages/EmailVerification";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
 import Dashboard from "./pages/Dashboard";
-import LoadingSpinner from "./pages/LoadingSpinner";
-import ForgetPassword from "./pages/ForgetPassword";
-import Resetpass from "./pages/Resetpass";
-import ImageCarousel from "./pages/ImageCarousel";
+import LoadingSpinner from "./components/LoadingSpinner";
+import ForgetPassword from "./pages/authpages/ForgetPassword";
+import Resetpass from "./pages/authpages/Resetpass";
+import ImageCarousel from "./components/ImageCarousel";
 import Feed from "./pages/dashboardPages/Feed";
 import Trending from "./pages/dashboardPages/Trending";
+import AllChannels from "./pages/dashboardPages/AllChannels";
+import FeaturedContents from "./pages/dashboardPages/FeaturedContents";
+import MyCollege from "./pages/dashboardPages/MyCollege";
+import Polls from "./pages/dashboardPages/Polls";
 
 // Redirect if the user is authenticated and verified
 const RedirectAuthenticatedUser = ({ children }) => {
@@ -65,6 +69,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />}>
             <Route path="feed" element={<Feed />} />
+            <Route path="mycollege" element={<MyCollege />} />
+            <Route path="polls" element={<Polls /> } />
+            <Route path="channels" element={<AllChannels />} />
+            <Route path="featuredcontent" element={<FeaturedContents />} />
             <Route path="trending" element={<Trending />} />
           </Route>
 

@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore } from "../../store/authStore";
+// import { useAuthStore } from "";
 
 const EmailVerification = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);

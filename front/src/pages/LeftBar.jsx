@@ -17,10 +17,10 @@ const LeftBar = () => {
 
   const upperLinks = [
     { name: "Feed", to: "/feed", icon: <GalleryVerticalEndIcon /> },
-    { name: "My College", to: "/my-college", icon: <Building2Icon /> },
+    { name: "My College", to: "/mycollege", icon: <Building2Icon /> },
     { name: "Polls", to: "/polls", icon: <Vote /> },
-    { name: "All Channels", to: "/all-channels", icon: <Shapes /> },
-    { name: "Featured Content", to: "/featured-content", icon: <Award /> },
+    { name: "All Channels", to: "/channels", icon: <Shapes /> },
+    { name: "Featured Content", to: "/featuredcontent", icon: <Award /> },
     { name: "Trending", to: "/trending", icon: <Flame /> },
   ];
 

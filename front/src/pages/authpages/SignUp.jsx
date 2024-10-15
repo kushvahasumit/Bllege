@@ -3,8 +3,8 @@ import { Formik, Form, Field} from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Input from "../components/Input";
-import { useAuthStore } from "../store/authStore";
+import Input from "../../components/Input";
+import { useAuthStore } from "../../store/authStore";
 
 function SignupForm() {
     const [isLoading, setIsLoading] = useState(false);
