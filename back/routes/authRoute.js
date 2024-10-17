@@ -9,30 +9,21 @@ import {
   checkAuth,
 } from "../controller/authController.js";
 import { verifyToken } from "../middleware/verifyToken.js";
-import { createPost, getAllPost, getSectionPosts, getUserPost } from "../controller/postController.js";
 
-const router = express.Router();
+const authRouters = express.Router();
 
-router.get("/check-auth", verifyToken, checkAuth);
+authRouters.get("/check-auth", verifyToken, checkAuth);
 
-router.post("/signup",signup);
+authRouters.post("/signup",signup);
 
-router.post("/login",login);
+authRouters.post("/login",login);
 
-router.post("/logout",logout);
+authRouters.post("/logout",logout);
 
-router.post("/verify-email", verifyEmail);
+authRouters.post("/verify-email", verifyEmail);
 
-router.post("/forget-password", forgetPassword);
+authRouters.post("/forget-password", forgetPassword);
 
-router.post("/reset-password/:token", resetPassword);
+authRouters.post("/reset-password/:token", resetPassword);
 
-router.post("/createPost",createPost);
-
-router.get("/getAllPosts", getAllPost);
-
-router.get("/getUserPosts/:userId", getUserPost);
-
-router.get('/:section',getSectionPosts);
-
-export default router;
+export default authRouters;
