@@ -35,7 +35,13 @@ app.use(cookieParser());
 app.use("/api/auth", authRouters);
 app.use("/api/post",attachSocketIO, postRouters);
 
+io.on("connection", (socket) => {
+  console.log("New client connected");
 
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+});
 
 server.listen(PORT, () => { //server.listen both http and websocket request
     connectDB();

@@ -87,7 +87,7 @@ const RightBar = () => {
             {index < footerLinks.length - 1 && " · "}
           </span>
         ))}
-        <p className="mt-2 mb-14">
+        <p className="mt-2 mb-16">
         2024 Team <strong className="text-lostSouls">Bllege</strong> inc.
       </p>
       </div>
