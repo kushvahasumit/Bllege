@@ -18,8 +18,8 @@ const Dashboard = () => {
           <LeftBar />
         </div>
 
-        <div className="w-3/5 h-full flex flex-col justify-center items-center">
-          <div className="flex flex-col justify-center items-center">
+        <div className="w-3/5 h-full pt-8">
+          <div className=" ">
             <Outlet />
           </div>
         </div>

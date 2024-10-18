@@ -36,14 +36,6 @@ app.use("/api/auth", authRouters);
 app.use("/api/post",attachSocketIO, postRouters);
 
 
-io.on("connection", (socket) => {
-  console.log("A user connected:", socket.id);
-
-  socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
-  });
-});
-
 
 server.listen(PORT, () => { //server.listen both http and websocket request
     connectDB();

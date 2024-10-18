@@ -11,6 +11,7 @@ export const useAuthStore = create((set) => ({
   isLoading: false,
   message :null,
   isCheckAuthenticated: true, //is user authenticated to show either signup or signin
+  post: [],
 
   signUp: async (email, password) => {
     set({ isLoading: true, error: null });

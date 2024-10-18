@@ -79,7 +79,7 @@ const Nav = ({ user, logOut }) => {
                 ? "text-black border-b-2 border-lostSouls p-1"
                 : "text-gray-700"
             }`}
-            onClick={() => handleClickPage(link.to)} // Handle click to set selected page
+            onClick={() => handleClickPage(link.to)} 
           >
             {link.icon}
             <Link to={link.to} className="text-center">

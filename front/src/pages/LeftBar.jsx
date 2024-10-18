@@ -72,7 +72,7 @@ const LeftBar = () => {
         {upperLinks.map((section, index) => (
           <li
             key={index}
-            className={`text-gray-700 hover:bg-slate-400 p-1 rounded-md flex ${
+            className={`text-gray-700 hover:bg-slate-300 p-1 rounded-md flex ${
               selectedLink === section.to
                 ? "bg-slate-300 text-black"
                 : "text-gray-700"

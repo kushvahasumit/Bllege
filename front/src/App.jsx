@@ -68,9 +68,10 @@ function App() {
       <div className="w-full">
         <Routes>
           <Route path="/" element={<Dashboard />}>
+            <Route index element={<Feed />} />
             <Route path="feed" element={<Feed />} />
             <Route path="mycollege" element={<MyCollege />} />
-            <Route path="polls" element={<Polls /> } />
+            <Route path="polls" element={<Polls />} />
             <Route path="channels" element={<AllChannels />} />
             <Route path="featuredcontent" element={<FeaturedContents />} />
             <Route path="trending" element={<Trending />} />
