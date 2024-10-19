@@ -15,6 +15,7 @@ import AllChannels from "./pages/dashboardPages/AllChannels";
 import FeaturedContents from "./pages/dashboardPages/FeaturedContents";
 import MyCollege from "./pages/dashboardPages/MyCollege";
 import Polls from "./pages/dashboardPages/Polls";
+import CreatePost from "./pages/CreatePost";
 
 // Redirect if the user is authenticated and verified
 const RedirectAuthenticatedUser = ({ children }) => {
@@ -31,7 +32,6 @@ const RedirectAuthenticatedUser = ({ children }) => {
 const ProtectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
 
-  // If not authenticated, redirect to login
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
@@ -75,8 +75,9 @@ function App() {
             <Route path="channels" element={<AllChannels />} />
             <Route path="featuredcontent" element={<FeaturedContents />} />
             <Route path="trending" element={<Trending />} />
+            <Route path="createpost" element={<CreatePost />} />
           </Route>
-
+          
           <Route
             path="/sign-up"
             element={

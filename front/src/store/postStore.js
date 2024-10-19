@@ -30,6 +30,31 @@ export const usePostStore = create((set) => ({
     }
   },
 
+  createPost: async (userId, section, topic, content) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await axios.post(`${API_URL}/createPost`, {
+        userId,
+        section,
+        topic,
+        content,
+      });
+
+      set((state) => ({
+        posts: [response.data.post, ...state.posts],
+        loading: false,
+      }));
+      return response.data;
+    } catch (error) {
+      set({
+        error: error.response?.data.message || "Error creating post",
+        loading: false,
+      });
+      throw error;
+    }
+  },
+
   likePost: async (postId, isLiked) => {
     try {
       const response = await axios.post(`${API_URL}/${postId}/like`);

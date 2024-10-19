@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { PlusCircle, MessageCircle, Eye, Share2, HeartIcon } from "lucide-react";
 import { usePostStore } from "../../store/postStore";
 import { formatDistanceToNow } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
-const StartPost = () => {
+const StartPost = ({ onClick }) => {
   return (
-    <div className="border border-gray-300 rounded-lg p-4 w-full bg-white shadow-md flex items-center space-x-4">
+    <div
+      onClick={onClick}
+      className="border border-gray-300 rounded-lg p-4 w-full bg-white shadow-md flex items-center space-x-4 hover:cursor-pointer"
+    >
       <PlusCircle className="text-lostSouls h-8 w-8" />
       <span className="text-gray-700 font-medium">Start a Post ...</span>
     </div>
@@ -14,6 +18,7 @@ const StartPost = () => {
 
 const Feed = () => {
   const {posts, fetchAllPost,likePost, listenForPostLikes, isLoading, error} = usePostStore();
+  const navigate = useNavigate();
   //  const [page, setPage] = useState(1);
   console.log(posts)
   // console.log(page)
@@ -42,7 +47,7 @@ const Feed = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <StartPost />
+      <StartPost onClick={() => navigate("/createpost")} />
       <div className="mt-6 mb-16 overflow-y-auto h-[calc(100vh-80px)] custom-scrollbar ">
         {isLoading && <p>Loading posts...</p>}
         {error && <p>Error loading posts: {error}</p>}
