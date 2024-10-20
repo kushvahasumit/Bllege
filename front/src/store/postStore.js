@@ -11,6 +11,8 @@ const socket = io(API_URL, {
 axios.defaults.withCredentials = true;
 export const usePostStore = create((set) => ({
   posts: [],
+  trendingPosts: [],
+  sectionPosts: [],
   loading: false,
   error: null,
 
@@ -85,4 +87,39 @@ export const usePostStore = create((set) => ({
       }));
     });
   },
+
+  fetchTrendingPosts: async (limit = 50) => {
+    set({ isLoading: true });
+    try {
+      const response = await fetch(`${API_URL}/getAllPosts`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
+
+      const allPosts = await response.json();
+
+      const sortedPosts = allPosts.sort((a, b) => b.likes - a.likes);
+      const topPosts = sortedPosts.slice(0, limit);
+
+      set({ trendingPosts: topPosts, isLoading: false, error: null });
+    } catch (error) {
+      console.error("Error fetching trending posts:", error);
+      set({ error: "Failed to fetch trending posts", isLoading: false });
+    }
+  },
+
+  // fetchSectionPosts: async () => {
+  //   set({ isLoading: true });
+  //   try {
+  //     const response = await axios.get(`${API_URL}/:section`);
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch posts");
+  //     }
+
+  //     set({ sectionPosts: response, isLoading: false, error: null });
+  //   } catch (error) {
+  //     console.error("Error fetching trending posts:", error);
+  //     set({ error: "Failed to fetch trending posts", isLoading: false });
+  //   }
+  // },
 }));

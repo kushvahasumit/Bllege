@@ -36,7 +36,6 @@ const Nav = ({ user, logOut }) => {
   const handleLogout = async () => {
     try {
       await logOut();
-      // navigate("/login");
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +91,7 @@ const Nav = ({ user, logOut }) => {
       <div className="flex space-x-4 relative">
         {user ? (
           <div className="flex space-x-4 relative dropdown">
-            <button className="bg-lostSouls flex text-white px-4 py-2 rounded-lg hover:bg-lostSouls">
+            <button className="bg-lostSouls flex text-white px-4 py-2 rounded-lg hover:bg-lostSouls" onClick={()=> navigate("/createpost")} >
               <SquarePen className="mr-2" />
               Bleege Post
             </button>
