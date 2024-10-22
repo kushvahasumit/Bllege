@@ -93,7 +93,7 @@ const Nav = ({ user, logOut }) => {
           <div className="flex space-x-4 relative dropdown">
             <button className="bg-lostSouls flex text-white px-4 py-2 rounded-lg hover:bg-lostSouls" onClick={()=> navigate("/createpost")} >
               <SquarePen className="mr-2" />
-              Bleege Post
+              Bllege Post
             </button>
 
             <UserCircle

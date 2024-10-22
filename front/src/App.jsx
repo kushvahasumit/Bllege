@@ -16,6 +16,7 @@ import FeaturedContents from "./pages/dashboardPages/FeaturedContents";
 import MyCollege from "./pages/dashboardPages/MyCollege";
 import Polls from "./pages/dashboardPages/Polls";
 import CreatePost from "./pages/CreatePost";
+import SectionPost from "./pages/dashboardPages/SectionPost";
 
 // Redirect if the user is authenticated and verified
 const RedirectAuthenticatedUser = ({ children }) => {
@@ -76,8 +77,9 @@ function App() {
             <Route path="featuredcontent" element={<FeaturedContents />} />
             <Route path="trending" element={<Trending />} />
             <Route path="createpost" element={<CreatePost />} />
+            <Route path="/:sectionhead/:section" element={<SectionPost />} />
           </Route>
-          
+
           <Route
             path="/sign-up"
             element={

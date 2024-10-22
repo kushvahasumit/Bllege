@@ -28,9 +28,9 @@ const LeftBar = () => {
     {
       title: "INDUSTRIES",
       links: [
-        { name: "Tech", to: "/industries/tech" },
-        { name: "Healthcare", to: "/industries/healthcare" },
-        { name: "Commerce", to: "/industries/commerce" },
+        { name: "Tech", to: "/industries/Tech" },
+        { name: "Healthcare", to: "/industries/Health" },
+        { name: "Cars", to: "/industries/Cars" },
       ],
     },
     {

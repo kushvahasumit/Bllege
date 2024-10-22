@@ -3,12 +3,19 @@ import { usePostStore } from "../../store/postStore";
 import Post from "../../components/Post";
 
 const Trending = () => {
-  const { trendingPosts, isLoading, error, fetchTrendingPosts, likePost } =
-    usePostStore();
+  const {
+    trendingPosts,
+    isLoading,
+    error,
+    fetchTrendingPosts,
+    listenForPostLikes,
+    likePost,
+  } = usePostStore();
 
   useEffect(() => {
     fetchTrendingPosts(50);
-  }, [fetchTrendingPosts]);
+    listenForPostLikes();
+  }, [fetchTrendingPosts,listenForPostLikes]);
 
   return (
     <div className="w-full max-w-3xl mx-auto">

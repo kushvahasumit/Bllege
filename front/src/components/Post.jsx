@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { HeartIcon, MessageCircle, Share2 } from "lucide-react";
+import { HeartIcon, MessageCircle, Share2, MoreHorizontal } from "lucide-react";
+import { usePostStore } from "../store/postStore"; 
 
 const Post = ({ post, likePost }) => {
+//   const { deletePost } = usePostStore(); 
+//   const [showDropdown, setShowDropdown] = useState(false);
+//   const handleDelete = async () => {
+//     await deletePost(post._id);
+//     window.location.reload(); 
+//   };
+
   return (
-    <div className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white">
+    <div className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white relative">
       <div className="flex items-center mb-3">
         <div className="w-10 h-10 bg-gray-200 rounded-full mr-3 flex items-center justify-center">
-          {/* <img
-            src="../../images/cover pic.jpg"
-            alt={post.section}
-            className="w-8 h-8"
-          /> */}
+          {/* <img src="../../images/cover pic.jpg" alt={post.section} className="w-8 h-8" /> */}
         </div>
         <div>
           <h3 className="font-bold text-sm flex items-center">
@@ -54,6 +58,27 @@ const Post = ({ post, likePost }) => {
             <span>{post.comments.length} Comments</span>
           </button>
         </div>
+
+        {/* Three Dots Menu */}
+        {/* <div className="relative">
+          <button
+            className="flex items-center text-gray-500 hover:text-blue-500"
+            onClick={() => setShowDropdown(!showDropdown)} // Toggle dropdown visibility
+          >
+            <MoreHorizontal />
+          </button>
+          {showDropdown && (
+            <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
+              <button
+                onClick={handleDelete}
+                className="block px-4 py-2 text-red-500 hover:bg-red-100 w-full text-left"
+              >
+                Delete
+              </button>
+            </div>
+          )}
+        </div> */}
+
         <button className="flex items-center text-gray-500 hover:text-blue-500">
           <Share2 className="mr-1 text-lostSouls" />
           <span>Share</span>

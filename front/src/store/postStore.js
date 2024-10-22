@@ -108,18 +108,30 @@ export const usePostStore = create((set) => ({
     }
   },
 
-  // fetchSectionPosts: async () => {
-  //   set({ isLoading: true });
-  //   try {
-  //     const response = await axios.get(`${API_URL}/:section`);
-  //     if (!response.ok) {
-  //       throw new Error("Failed to fetch posts");
-  //     }
+  fetchSectionPosts: async (sectionhead, section) => {
+    set({ isLoading: true, error: null });
+    console.log(sectionhead , "+", section);
+    try {
+      const response = await axios.get(`${API_URL}/${section}`);
+      console.log("this is section post", response.data);
+      set({ sectionPosts: response.data, isLoading: false });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Error fetching posts",
+        isLoading: false,
+      });
+    }
+  },
 
-  //     set({ sectionPosts: response, isLoading: false, error: null });
-  //   } catch (error) {
-  //     console.error("Error fetching trending posts:", error);
-  //     set({ error: "Failed to fetch trending posts", isLoading: false });
-  //   }
-  // },
+  // deletePost: async (postId)=>{
+  //   console.log(postId);
+  //  try {
+  //   const response = await axios.delete(`${API_URL}/${postId}`);
+  //   console.log(response.data);
+
+  //   return response.data;
+  //  } catch (error) {
+  //   console.error("Error in deleting the post:", error.response.data);
+  //  }
+  // }
 }));
