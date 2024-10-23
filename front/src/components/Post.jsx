@@ -2,6 +2,24 @@ import React, { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { HeartIcon, MessageCircle, Share2, MoreHorizontal } from "lucide-react";
 import { usePostStore } from "../store/postStore"; 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// const handleShare = (postUrl) => {
+//   navigator.clipboard
+//     .writeText(postUrl)
+//     .then(() => {
+//       toast.success("Link copied to clipboard!", {
+//         position: "top-left",
+//         autoClose: 3000,
+//       });
+//     })
+//     .catch((error) => {
+//       console.error("Error copying link: ", error);
+//       toast.error("Failed to copy the link.");
+//     });
+// };
+
 
 const Post = ({ post, likePost }) => {
 //   const { deletePost } = usePostStore(); 
@@ -10,6 +28,9 @@ const Post = ({ post, likePost }) => {
 //     await deletePost(post._id);
 //     window.location.reload(); 
 //   };
+
+ 
+    const postUrl = `http://localhost:5173/post/${post._id}`;
 
   return (
     <div className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white relative">
@@ -79,7 +100,10 @@ const Post = ({ post, likePost }) => {
           )}
         </div> */}
 
-        <button className="flex items-center text-gray-500 hover:text-blue-500">
+        <button
+          // onClick={handleShare(postUrl)}
+          className="flex items-center text-gray-500"
+        >
           <Share2 className="mr-1 text-lostSouls" />
           <span>Share</span>
         </button>

@@ -5,11 +5,11 @@ import Post from "../../components/Post";
 const Trending = () => {
   const {
     trendingPosts,
+    fetchTrendingPosts,
+    likePost,
+    listenForPostLikes,
     isLoading,
     error,
-    fetchTrendingPosts,
-    listenForPostLikes,
-    likePost,
   } = usePostStore();
 
   useEffect(() => {

@@ -36,6 +36,7 @@ const Nav = ({ user, logOut }) => {
   const handleLogout = async () => {
     try {
       await logOut();
+      navigate("/"); 
     } catch (error) {
       console.log(error);
     }
