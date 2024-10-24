@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  Activity,
   Briefcase,
   ChartNoAxesCombined,
   Home,
@@ -55,11 +56,14 @@ const Nav = ({ user, logOut }) => {
   return (
     <nav className="shadow-md px-6 py-2 flex items-center space-x-4">
       <div className="flex items-center">
-        <img
-          src="./src/images/bgrsm.png"
-          alt="BllegeLogo"
-          className="h-12 w-14"
-        />
+        <a href="/">
+          {" "}
+          <img
+            src="./src/images/bgrsm.png"
+            alt="Bllege"
+            className="h-12 w-14"
+          />
+        </a>
       </div>
 
       <div className="hidden md:flex items-center">
@@ -79,7 +83,7 @@ const Nav = ({ user, logOut }) => {
                 ? "text-black border-b-2 border-lostSouls p-1"
                 : "text-gray-700"
             }`}
-            onClick={() => handleClickPage(link.to)} 
+            onClick={() => handleClickPage(link.to)}
           >
             {link.icon}
             <Link to={link.to} className="text-center">
@@ -92,7 +96,10 @@ const Nav = ({ user, logOut }) => {
       <div className="flex space-x-4 relative">
         {user ? (
           <div className="flex space-x-4 relative dropdown">
-            <button className="bg-lostSouls flex text-white px-4 py-2 rounded-lg hover:bg-lostSouls" onClick={()=> navigate("/createpost")} >
+            <button
+              className="bg-lostSouls flex text-white px-4 py-2 rounded-lg hover:bg-lostSouls"
+              onClick={() => navigate("/createpost")}
+            >
               <SquarePen className="mr-2" />
               Bllege Post
             </button>
@@ -104,13 +111,21 @@ const Nav = ({ user, logOut }) => {
 
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                <button className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-slate-200">
+                  <p> <strong>{user.name}</strong> </p>
+                </button>
+                <button className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-slate-200">
+                  <Activity className="mr-2" />
+                  My Activity
+                </button>
                 <button
-                  className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-gray-100"
+                  className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-slate-200"
                   onClick={handleLogout}
                 >
                   <LogOut className="mr-2" />
                   Logout
                 </button>
+                
               </div>
             )}
           </div>

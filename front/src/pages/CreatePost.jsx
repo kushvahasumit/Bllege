@@ -44,7 +44,8 @@ const CreatePost = () => {
           </div>
           <div>
             <p className="text-sm text-gray-500 pr-1">
-              Anonymous User from <strong>{user?.college || "Unknown College"}</strong>
+              Anonymous User from{" "}
+              <strong>{user?.college || "Unknown College"}</strong>
             </p>
           </div>
         </div>
@@ -61,15 +62,19 @@ const CreatePost = () => {
               id="section"
               value={section}
               onChange={(e) => setSection(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-3"
+              className="w-full border border-gray-300 rounded-lg p-3 max-h-12 overflow-y-auto"
+              style={{ maxHeight: "150px", overflowY: "auto" }}
               required
             >
               <option value="">Select Section</option>
               <option value="Tech">Tech</option>
               <option value="Cars">Cars</option>
               <option value="HR">HR</option>
+              <option value="E-Commerce">Ecom</option>
+              <option value="AI-Trends">AI Trends</option>
+              <option value="Start-Ups">Startups</option>
               <option value="Health">Health</option>
-              <option value="Other">Other</option>
+              <option value="User-Likely">User Likely</option>
             </select>
           </div>
 
@@ -87,6 +92,7 @@ const CreatePost = () => {
               onChange={(e) => setTopic(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-3"
               placeholder="Enter the post topic"
+              autoComplete="off"
               required
             />
           </div>
@@ -104,6 +110,7 @@ const CreatePost = () => {
               onChange={(e) => setContent(e.target.value)}
               className="w-full h-40 border border-gray-300 rounded-lg p-3"
               placeholder="Write your post content here"
+              autoComplete="off"
               required
             />
           </div>

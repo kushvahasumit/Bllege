@@ -6,15 +6,18 @@ const RightBar = () => {
     { title: "H&M", to: "/sponsored/h&m" },
     { title: "Jio Career", to: "/sponsored/jio" },
     { title: "Amazon", to: "/sponsored/amazon" },
+    { title: "Google", to: "/sponsored/amazon" },
+    { title: "Cars24", to: "/sponsored/amazon" },
+    { title: "Woodland", to: "/sponsored/amazon" },
   ];
 
   const featuredContent = [
-    { title: "Tech Innovations", to: "/featured/tech-innovations" },
-    { title: "Healthcare Revolution", to: "/featured/healthcare-revolution" },
-    { title: "E-Commerce Boom", to: "/featured/ecommerce-boom" },
-    { title: "AI Trends", to: "/featured/ai-trends" },
-    { title: "Finance & Investment", to: "/featured/finance-investment" },
-    { title: "Startups to Watch", to: "/featured/startups" },
+    { title: "Tech Innovations", to: "/featuredcontent" },
+    { title: "Healthcare Revolution", to: "/featuredcontent" },
+    { title: "E-Commerce Boom", to: "/featuredcontent" },
+    { title: "AI Trends", to: "/featuredcontent" },
+    { title: "Finance & Investment", to: "/featuredcontent" },
+    { title: "Startups to Watch", to: "/featuredcontent" },
   ];
 
 //   const [randomContent, setRandomContent] = useState([]);
@@ -27,15 +30,15 @@ const RightBar = () => {
 //   }, []);
 
   const mostRead = [
-    { title: "is IITian are good at DSA?", to: "/featured/tech-innovations" },
-    { title: "Healthcare Revolution is a next wonderfull thing in US", to: "/featured/healthcare-revolution" },
-    { title: "in next 5 year E-Commerce Boom at 50%", to: "/featured/ecommerce-boom" },
-    { title: "AI Trends is hot now a days", to: "/featured/ai-trends" },
-    { title: "Best startup for Placements?", to: "/featured/startups" },
+    { title: "is IITian are good at DSA?", to: "/Blind-Thoughts/Tech" },
+    { title: "Healthcare Revolution is a next wonderfull thing in US", to: "/Blind-Thoughts/Health" },
+    { title: "in next 5 year E-Commerce Boom at 50%", to: "/Blind-Thoughts/ecommerce-boom" },
+    { title: "AI Trends is hot now a days", to: "/Blind-Thoughts/ai-trends" },
+    { title: "Best startup for Placements?", to: "/Blind-Thoughts/startups" },
   ];
 
   const footerLinks = [
-    { label: "Why College", to: "/why-college" },
+    { label: "Why Bllege", to: "/why-college" },
     { label: "Blog", to: "/blog" },
     { label: "Career", to: "/career" },
     { label: "Terms", to: "/terms" },
@@ -48,20 +51,31 @@ const RightBar = () => {
 
   return (
     <div className="h-full w-full flex flex-col p-4  space-y-4 overflow-y-scroll custom-scrollbar mt-1">
-      <ul className="space-x-0 border border-stone-300 rounded-2xl h-full p-2">
-        <h1 className="text-xl pl-1">Our Sponsored</h1>
-        {sponsored &&
-          sponsored.map((value, index) => (
-            <li key={index} className="text-gray-700 hover:text-black p-1">
-              <Link to={value.to}>{value.title}</Link>
-            </li>
-          ))}
-      </ul>
+      <div className="flex justify-between space-x-0 border border-stone-300 rounded-2xl h-full p-2">
+        
+        <ul className="">
+          <h1 className="text-xl pl-1">Our Sponsored</h1>
+          {sponsored &&
+            sponsored.slice(0, 3).map((value, index) => (
+              <li key={index} className="text-gray-700 hover:text-black p-1">
+                <p>{value.title}</p>
+              </li>
+            ))}
+        </ul>
+        {/* <ul>
+          {sponsored &&
+            sponsored.slice(3).map((value, index) => (
+              <li key={index} className="text-gray-700 hover:text-black p-1">
+                <p>{value.title}</p>
+              </li>
+            ))}
+        </ul> */}
+      </div>
 
       <ul className="space-x-0 mt-3 border border-stone-300 rounded-2xl h-full p-2">
         <h2 className="text-xl p-1">Featured Content</h2>
         {featuredContent &&
-          featuredContent.map((content, index) => (
+          featuredContent.slice(0,4).map((content, index) => (
             <li key={index} className="text-gray-700 hover:text-black p-1">
               <Link to={content.to}>{content.title}</Link>
             </li>
@@ -88,8 +102,8 @@ const RightBar = () => {
           </span>
         ))}
         <p className="mt-2 mb-16">
-        2024 Team <strong className="text-lostSouls">Bllege</strong> inc.
-      </p>
+          2024 Team <strong className="text-lostSouls">Bllege</strong> inc.
+        </p>
       </div>
     </div>
   );

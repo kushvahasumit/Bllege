@@ -43,12 +43,15 @@ const SectionPost = () => {
           </div>
           <div>
             <h3 className="text-lg font-semibold uppercase">{sectionhead}</h3>
-            <p className="text-sm text-gray-500">@{section}</p>
+            <p className="text-sm text-gray-500">
+              Public
+              <span className="mx-1">•</span>@{section}
+            </p>
           </div>
         </div>
 
         <button
-          className={`py-2 px-4 rounded-lg font-medium ${
+          className={`py-2 px-4 rounded-2xl font-medium ${
             isFollowing
               ? "bg-red-300 text-black hover:bg-red-400"
               : "bg-lostSouls text-white hover:bg-lostSouls"
