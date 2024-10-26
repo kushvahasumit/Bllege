@@ -17,6 +17,7 @@ import MyCollege from "./pages/dashboardPages/MyCollege";
 import Polls from "./pages/dashboardPages/Polls";
 import CreatePost from "./pages/CreatePost";
 import SectionPost from "./pages/dashboardPages/SectionPost";
+import ChatRoom from "./pages/dashboardPages/ChatRoom";
 
 // Redirect if the user is authenticated and verified
 const RedirectAuthenticatedUser = ({ children }) => {
@@ -72,6 +73,7 @@ function App() {
             <Route index element={<Feed />} />
             <Route path="feed" element={<Feed />} />
             <Route path="mycollege" element={<MyCollege />} />
+            <Route path="/chik-chat" element={<ChatRoom />} />
             <Route path="polls" element={<Polls />} />
             <Route path="channels" element={<AllChannels />} />
             <Route path="featuredcontent" element={<FeaturedContents />} />

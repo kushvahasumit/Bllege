@@ -223,3 +223,30 @@ export const checkAuth = async (req,res)=>{
     res.status(400).json({ sucess: false, message: error_message });
   }
 }
+
+export const updateCollegeName = async (req, res) => {
+  const { userId, collegeName } = req.body; 
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { college: collegeName },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "College name updated",
+        user: updatedUser,
+      });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};

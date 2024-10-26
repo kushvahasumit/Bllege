@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    college:{
+        type:String,
+        default:"New",
+    },
     lastLogin :{
         type: Date,
         default: Date.now

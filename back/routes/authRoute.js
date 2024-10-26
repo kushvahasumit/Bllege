@@ -7,6 +7,7 @@ import {
   forgetPassword,
   resetPassword,
   checkAuth,
+  updateCollegeName,
 } from "../controller/authController.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 
@@ -25,5 +26,7 @@ authRouters.post("/verify-email", verifyEmail);
 authRouters.post("/forget-password", forgetPassword);
 
 authRouters.post("/reset-password/:token", resetPassword);
+
+authRouters.put("/update-college-name", updateCollegeName);
 
 export default authRouters;
