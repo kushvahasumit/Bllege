@@ -10,21 +10,21 @@ const Dashboard = () => {
   const {user,logOut} = useAuthStore();
 
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-screen flex flex-col">
       <Nav user={user} logOut={logOut} />
 
-      <div className="flex w-full h-screen">
-        <div className="w-1/5 h-full  flex justify-center items-center">
+      <div className="flex w-full h-full">
+        <div className="w-1/5 flex justify-center items-center">
           <LeftBar />
         </div>
 
-        <div className="w-3/5 h-full pt-8">
-          <div className=" ">
+        <div className="w-3/5 flex flex-col pt-8">
+          <div className=" flex-grow">
             <Outlet />
           </div>
         </div>
 
-        <div className="w-1/5 h-full flex justify-center items-center">
+        <div className="w-1/5 flex justify-center items-center">
           <RightBar />
         </div>
       </div>

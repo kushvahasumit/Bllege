@@ -38,6 +38,15 @@ app.use("/api/post",attachSocketIO, postRouters);
 io.on("connection", (socket) => {
   console.log("New client connected");
 
+  socket.on("joinRoom", (collegeName) => {
+    socket.join(collegeName);
+    console.log(`User joined room: ${collegeName}`);
+  });
+
+  socket.on("chatMessage", ({ collegeName, message }) => {
+    io.to(collegeName).emit("chatMessage", message);
+  });
+
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });

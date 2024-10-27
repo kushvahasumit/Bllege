@@ -33,48 +33,65 @@ const MyCollege = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-semibold mb-4">My College</h1>
+    <div
+      className="min-h-screen flex flex-col border rounded-lg items-center justify-center bg-cover bg-center relative"
+      style={{
+        backgroundImage:
+          "url('https://plus.unsplash.com/premium_photo-1664303228186-a61e7dc91597?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cmFuZG9tfGVufDB8fDB8fHww)",
+      }}
+    >
+      <div className="absolute inset-0 bg-offWhite border rounded-lg opacity-40"></div>
 
-      {user && user.college === "New" ? (
-        <div>
-          <label
-            htmlFor="college"
-            className="block font-medium text-gray-700 mb-2"
-          >
-            Select Your College
-          </label>
-          <select
-            id="college"
-            value={college}
-            onChange={handleCollegeSelect}
-            className="w-full border border-gray-300 rounded-lg p-3"
-            required
-          >
-            <option value="">Select Your College</option>
-            <option value="sitp">SITP</option>
-            <option value="gehu">GEHU</option>
-            <option value="dtu">DTU</option>
-          </select>
+      <div className="relative z-10 w-full max-w-lg p-6 rounded-lg shadow-lg bg-white bg-opacity-90 text-center">
+        <h2 className="text-4xl font-extrabold text-gray-800 mb-4">
+          Join Your College Discussion
+        </h2>
 
-          <button
-            onClick={handleCollegeUpdate}
-            className="w-full mt-4 bg-lostSouls text-white rounded-lg py-2"
-          >
-            Update College
-          </button>
-        </div>
-      ) : (
-        <div>
-          <p>Your college: {user.college}</p>
+        <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+          {user.college === "New"
+            ? "Select Your College to Start"
+            : `Join your batchmates in ${user.college} internal discussion`}
+        </h1>
+
+        {user && user.college === "New" ? (
+          <div>
+            <label
+              htmlFor="college"
+              className="block font-medium text-gray-700 mb-2"
+            >
+              Select Your College
+            </label>
+            <select
+              id="college"
+              value={college}
+              onChange={handleCollegeSelect}
+              className="w-full border border-gray-300 rounded-lg p-3 mb-4"
+              required
+            >
+              <option value="">Select Your College</option>
+              <option value="sitp">Seemant Engineering Institute</option>
+              <option value="gehu">Graphic Era</option>
+              <option value="dtu">DTU</option>
+            </select>
+
             <button
-              className="w-full mt-4 bg-lostSouls text-white rounded-lg py-2"
+              onClick={handleCollegeUpdate}
+              className="w-full bg-lostSouls text-white rounded-lg py-2 transition-transform transform hover:scale-105 shadow-md"
+            >
+              Update College
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button
+              className="w-full bg-lostSouls text-white rounded-lg py-3 mt-4 transition-transform transform hover:scale-105 shadow-md"
               onClick={handleJoinRoom}
             >
-              Join Room
+              JOIN ROOM
             </button>
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

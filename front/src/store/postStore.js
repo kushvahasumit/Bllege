@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const API_URL = "http://localhost:5000/api/post";
+const API_URL = "http://localhost:5000";
 const socket = io(API_URL, {
   transports: ["websocket"],
   reconnection: true,
@@ -14,6 +14,7 @@ export const usePostStore = create((set) => ({
   posts: [],
   trendingPosts: [],
   sectionPosts: [],
+  messages: [],
   loading: false,
   error: null,
 
@@ -21,7 +22,7 @@ export const usePostStore = create((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const response = await axios.get(`${API_URL}/getAllPosts`);
+      const response = await axios.get(`${API_URL}/api/post/getAllPosts`);
       console.log(response);
       set({ posts: response.data, isLoading: false });
     } catch (error) {
@@ -37,7 +38,7 @@ export const usePostStore = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const response = await axios.post(`${API_URL}/createPost`, {
+      const response = await axios.post(`${API_URL}/api/post/createPost`, {
         userId,
         section,
         topic,
@@ -60,7 +61,7 @@ export const usePostStore = create((set) => ({
 
   likePost: async (postId, isLiked) => {
     try {
-      const response = await axios.post(`${API_URL}/${postId}/like`);
+      const response = await axios.post(`${API_URL}/api/post/${postId}/like`);
       console.log("This is like response", response.data);
 
       set((state) => ({
@@ -131,7 +132,7 @@ export const usePostStore = create((set) => ({
   fetchTrendingPosts: async (limit = 50) => {
     set({ isLoading: true });
     try {
-      const response = await fetch(`${API_URL}/getAllPosts`);
+      const response = await fetch(`${API_URL}/api/post/getAllPosts`);
       if (!response.ok) {
         throw new Error("Failed to fetch posts");
       }
@@ -152,7 +153,7 @@ export const usePostStore = create((set) => ({
     set({ isLoading: true, error: null });
     console.log(sectionhead, "+", section);
     try {
-      const response = await axios.get(`${API_URL}/${section}`);
+      const response = await axios.get(`${API_URL}/api/post/${section}`);
       console.log("this is section post", response.data);
       set({ sectionPosts: response.data, isLoading: false });
     } catch (error) {
@@ -181,5 +182,23 @@ export const usePostStore = create((set) => ({
         ? state.following.filter((id) => id !== userId)
         : [...state.following, userId],
     })),
-    
+
+    //chat functionality
+  joinRoom: (collegeName) => {
+    socket.emit("joinRoom", collegeName);
+  },
+
+  sendMessage: (collegeName, message) => {
+    socket.emit("chatMessage", { collegeName, message }, (response) => {
+      if (response.success) {
+        set((state) => ({ messages: [...state.messages, message] }));
+      }
+    });
+  },
+
+  listenForChatMessages: () => {
+    socket.on("chatMessage", (message) => {
+      set((state) => ({ messages: [...state.messages, message] }));
+    });
+  },
 }));

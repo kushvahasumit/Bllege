@@ -45,9 +45,9 @@ const AllChannels = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto mt-4 mb-28 overflow-y-auto h-[calc(100vh-100px)] custom-scrollbar">
-      <div className="mt-6">
+      <div className="mt-6 p-4 border rounded-lg">
         <h2 className="text-2xl font-bold">Featured Topics</h2>
-        <div className="flex justify-between mt-4">
+        <div className="flex justify-between mt-4 ">
           <ul className="list-disc pl-6 space-y-2 w-1/2">
             {featuredTopics.slice(0, 3).map((topic, index) => (
               <li key={index} className="text-lg">

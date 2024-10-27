@@ -73,7 +73,7 @@ function App() {
             <Route index element={<Feed />} />
             <Route path="feed" element={<Feed />} />
             <Route path="mycollege" element={<MyCollege />} />
-            <Route path="/chik-chat" element={<ChatRoom />} />
+            <Route path="chik-chat" element={<ChatRoom />} />
             <Route path="polls" element={<Polls />} />
             <Route path="channels" element={<AllChannels />} />
             <Route path="featuredcontent" element={<FeaturedContents />} />
