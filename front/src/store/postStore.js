@@ -183,7 +183,7 @@ export const usePostStore = create((set) => ({
         : [...state.following, userId],
     })),
 
-    //chat functionality
+  //chat functionality
   joinRoom: (collegeName) => {
     socket.emit("joinRoom", collegeName);
   },
@@ -200,5 +200,15 @@ export const usePostStore = create((set) => ({
     socket.on("chatMessage", (message) => {
       set((state) => ({ messages: [...state.messages, message] }));
     });
+  },
+
+  leaveRoom: (room) => {
+    socket.emit("leaveRoom", room); // Emit leave room event
+    set({ messages: [] }); // Clear messages or handle state as needed
+  },
+
+  disconnectSocket: () => {
+    socket.disconnect(); // Disconnect the socket
+    console.log("Socket disconnected");
   },
 }));

@@ -31,9 +31,15 @@ const RightBar = () => {
 
   const mostRead = [
     { title: "is IITian are good at DSA?", to: "/Blind-Thoughts/Tech" },
-    { title: "Healthcare Revolution is a next wonderfull thing in US", to: "/Blind-Thoughts/Health" },
-    { title: "in next 5 year E-Commerce Boom at 50%", to: "/Blind-Thoughts/ecommerce-boom" },
-    { title: "AI Trends is hot now a days", to: "/Blind-Thoughts/ai-trends" },
+    {
+      title: "Healthcare Revolution is a next wonderfull thing in US",
+      to: "/Blind-Thoughts/Health",
+    },
+    {
+      title: "in next 5 year E-Commerce Boom at 50%",
+      to: "/Blind-Thoughts/ecommerce-boom",
+    },
+    { title: "AI Trends is hot now a days", to: "/Blind-Thoughts/AI-Trends" },
     { title: "Best startup for Placements?", to: "/Blind-Thoughts/startups" },
   ];
 

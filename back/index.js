@@ -50,6 +50,11 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
+
+  socket.on("leaveRoom", (room) => {
+    socket.leave(room);
+    socket.to(room).emit("userLeft", { userId: socket.id });
+  });
 });
 
 server.listen(PORT, () => { //server.listen both http and websocket request

@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema(
     },
     section: {
       type: String,
-      enum: ["Tech", "Cars", "HR", "Health", "Other"],
+      enum: ["Tech", "Cars", "HR", "Health", "AI-Trends","Start-Ups","User-Likely","E-Commerce"],
       required: true,
     },
     topic: {
