@@ -33,13 +33,21 @@ const SectionPost = () => {
     <div className="w-full max-w-3xl mx-auto">
       <div
         className="h-32 bg-teal-100 bg-cover bg-center"
-        style={{ backgroundImage: `url('path/to/banner-image.jpg')` }}
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHJhbmRvbXxlbnwwfHwwfHx8MA%3D%3D')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       ></div>
 
       <div className="flex items-center justify-between p-4 border-b border-gray-300">
         <div className="flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
-            {/* <img className="rounded-full w-12 h-12" alt="User Avatar" /> */}
+          <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden relative">
+            <img
+              src="https://images.unsplash.com/photo-1493612276216-ee3925520721?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHJhbmRvbXxlbnwwfHwwfHx8MA%3D%3D"
+              className="object-cover transition-transform duration-300 ease-in-out transform hover:scale-150"
+            />
           </div>
           <div>
             <h3 className="text-lg font-semibold uppercase">{sectionhead}</h3>

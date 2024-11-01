@@ -36,7 +36,11 @@ const Post = ({ post, likePost }) => {
     <div className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white relative">
       <div className="flex items-center mb-3">
         <div className="w-10 h-10 bg-gray-200 rounded-full mr-3 flex items-center justify-center">
-          {/* <img src="../../images/cover pic.jpg" alt={post.section} className="w-8 h-8" /> */}
+          <img
+            src="../src/images/bgrsm.png"
+            alt={post.section}
+            className="w-8 h-8"
+          />
         </div>
         <div>
           <h3 className="font-bold text-sm flex items-center">

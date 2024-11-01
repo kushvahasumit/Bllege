@@ -37,22 +37,22 @@ const RightBar = () => {
     },
     {
       title: "in next 5 year E-Commerce Boom at 50%",
-      to: "/Blind-Thoughts/ecommerce-boom",
+      to: "/Blind-Thoughts/E-Commerce",
     },
     { title: "AI Trends is hot now a days", to: "/Blind-Thoughts/AI-Trends" },
     { title: "Best startup for Placements?", to: "/Blind-Thoughts/startups" },
   ];
 
   const footerLinks = [
-    { label: "Why Bllege", to: "/why-college" },
-    { label: "Blog", to: "/blog" },
-    { label: "Career", to: "/career" },
-    { label: "Terms", to: "/terms" },
-    { label: "Newsroom", to: "/newsroom" },
+    { label: "Why Bllege", to: "/why-bllege-blog-carrer-news-faq" },
+    { label: "Blog", to: "/why-bllege-blog-carrer-news-faq" },
+    { label: "Career", to: "/why-bllege-blog-carrer-news-faq" },
+    { label: "Terms", to: "/why-bllege-blog-carrer-news-faq" },
+    { label: "Newsroom", to: "/why-bllege-blog-carrer-news-faq" },
     { label: "Updates", to: "/updates" },
-    { label: "Privacy", to: "/privacy" },
-    { label: "Community", to: "/community" },
-    { label: "FAQs", to: "/faq" },
+    { label: "Privacy", to: "/why-bllege-blog-carrer-news-faq" },
+    { label: "Community", to: "/why-bllege-blog-carrer-news-faq" },
+    { label: "FAQs", to: "/why-bllege-blog-carrer-news-faq" },
   ];
 
   return (

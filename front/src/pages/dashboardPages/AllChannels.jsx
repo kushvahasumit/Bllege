@@ -53,9 +53,22 @@ const AllChannels = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto mt-6 mb-16 overflow-y-auto h-[calc(100vh-100px)] custom-scrollbar">
-      <h1 className="h-28 flex-col justify-center bg-teal-100 text-left text-3xl font-semibold mb-8">
-        <strong className="mt-8">Discover and Follow Channels</strong>
-        <p> You Can Tailor Your Home Feed To Align With Interests</p>
+      <h1
+        className="h-40 flex flex-col justify-center text-right  text-4xl font-semibold mb-8 relative"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHJhbmRvbXxlbnwwfHwwfHx8MA%3D%3D')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="  h-full w-full absolute top-0 left-0"></div>{" "}
+        <strong className="mt-8 relative mr-4 z-10">
+          Discover and Follow Channels
+        </strong>
+        <p className="relative z-10 mr-4">
+          You Tailor Your Feed To Align With Interests
+        </p>
       </h1>
 
       {lowerSections.map((section, sectionIndex) => (
@@ -71,10 +84,18 @@ const AllChannels = () => {
                 className="flex items-center justify-between p-4 border-b border-gray-300"
               >
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center"></div>
+                  <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden relative">
+                    <img
+                      src="https://images.unsplash.com/photo-1493612276216-ee3925520721?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHJhbmRvbXxlbnwwfHwwfHx8MA%3D%3D"
+                      alt={link.name}
+                      className="w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-150"
+                    />
+                  </div>
                   <div>
                     <h3 className="text-lg font-semibold">{link.name}</h3>
-                    <p className="text-sm text-gray-500">{link.name.length} Followers</p>
+                    <p className="text-sm text-gray-500">
+                      {link.name.length} Followers
+                    </p>
                   </div>
                 </div>
 
