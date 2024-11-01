@@ -1,5 +1,5 @@
 import express from "express";
-import { comment, createPost, deletePost, getAllPost, getSectionPosts, getUserPost, like } from "../controller/postController.js";
+import { comment, createPost, deletePost, getAllPost, getSectionPosts, getUserPost, like, polls, vote } from "../controller/postController.js";
 const postRouters = express.Router();
 
 postRouters.post("/createPost", createPost);
@@ -15,5 +15,9 @@ postRouters.delete("/:postId", deletePost);
 postRouters.post("/:postId/like", like);
 
 postRouters.post("/:postId/comment", comment);
+
+postRouters.post("/vote",vote);
+
+postRouters.get("/poll/getAllPolls",polls);
 
 export default postRouters;

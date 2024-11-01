@@ -3,29 +3,31 @@ import { Post } from "../model/PostSchema.js";
 import { User } from "../model/User.js";
 
 export const createPost = async (req, res) => {
-  const { userId, section, topic, content } = req.body;
+  const { userId, section, topic, content, isPoll, pollQuestion, pollOptions } =
+    req.body;
 
   try {
     const user = await User.findById(userId);
-    console.log("this is post user", user);
     if (!user || !user.isVerified) {
       return res.status(403).json({ message: "User not verified" });
     }
 
-    const post = new Post({
-      user: user._id,
+    const newPost = new Post({
+      user: userId,
       section,
       topic,
       content,
+      isPoll,
+      pollQuestion,
+      pollOptions: isPoll ? pollOptions : [],
     });
-    console.log(post);
-    await post.save();
-    res.status(201).json({
-      message: "Post created successfully!",
-      post,
-    });
+
+    await newPost.save();
+
+    res.status(201).json(newPost);
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    console.error("Error creating post:", err.message);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -134,3 +136,34 @@ export const comment = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
+export const vote = async (req, res) => {
+  const { postId, optionIndex } = req.body;
+
+  try {
+    // Find the post by ID
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    // Increment the vote count for the selected option
+    post.pollOptions[optionIndex].votes += 1;
+    await post.save(); // Save the updated post
+
+    res.status(200).json({ message: 'Vote counted successfully', post });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const polls = async(req,res) => {
+  try {
+    const allPolls = await Post.find({isPoll : true});
+
+    res.status(200).json(allPolls);
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+}

@@ -17,6 +17,8 @@ export const usePostStore = create((set) => ({
   messages: [],
   loading: false,
   error: null,
+  votes: {},
+  pollPosts: [],
 
   fetchAllPost: async () => {
     set({ isLoading: true, error: null });
@@ -34,17 +36,37 @@ export const usePostStore = create((set) => ({
     }
   },
 
-  createPost: async (userId, section, topic, content) => {
+  createPost: async (postData) => {
     set({ loading: true, error: null });
 
     try {
-      const response = await axios.post(`${API_URL}/api/post/createPost`, {
+      const {
         userId,
         section,
         topic,
         content,
-      });
+        isPoll,
+        pollQuestion,
+        pollOptions,
+      } = postData;
 
+      const handleLoad = {
+        userId,
+        section,
+        isPoll,
+        pollQuestion: isPoll ? pollQuestion : undefined,
+        pollOptions: isPoll ? pollOptions : undefined,
+        topic: !isPoll ? topic : undefined,
+        content: !isPoll ? content : undefined,
+      };
+
+      console.log("Post Data:", handleLoad);
+
+      const response = await axios.post(
+        `${API_URL}/api/post/createPost`,
+        postData
+      );
+      console.log("Response Data:", response.data);
       set((state) => ({
         posts: [response.data.post, ...state.posts],
         loading: false,
@@ -164,6 +186,16 @@ export const usePostStore = create((set) => ({
     }
   },
 
+  fetchPollPosts: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(`${API_URL}/api/post/poll/getAllPolls`);
+      set({ pollPosts: response.data, isLoading: false });
+    } catch (error) {
+      set({ isLoading: false, error: error.message });
+    }
+  },
+
   // deletePost: async (postId)=>{
   //   console.log(postId);
   //  try {
@@ -183,7 +215,31 @@ export const usePostStore = create((set) => ({
         : [...state.following, userId],
     })),
 
-  //chat functionality
+  setVote: (postId, optionIndex) =>
+    set((state) => ({
+      votes: {
+        ...state.votes,
+        [postId]: optionIndex,
+      },
+    })),
+
+  getVote: async (postId) => {
+    try {
+      const response = await axios.get(`${API_URL}/api/post/getAllPosts`);
+
+      if (response && response.data) {
+        const votes = response.data.votes;
+        return votes ? votes[postId] || null : null;
+      } else {
+        console.error("Response data is undefined or malformed");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching votes:", error);
+      return null;
+    }
+  },
+
   joinRoom: (collegeName) => {
     socket.emit("joinRoom", collegeName);
   },

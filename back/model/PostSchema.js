@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+// const pollOptionSchema = new mongoose.Schema({
+//   optionText: String,
+//   votes: {
+//     type: Number,
+//     default: 0,
+//   },
+// });
+
 const postSchema = new mongoose.Schema(
   {
     user: {
@@ -9,17 +17,46 @@ const postSchema = new mongoose.Schema(
     },
     section: {
       type: String,
-      enum: ["Tech", "Cars", "HR", "Health", "AI-Trends","Start-Ups","User-Likely","E-Commerce"],
+      enum: [
+        "Tech",
+        "Cars",
+        "HR",
+        "Health",
+        "AI-Trends",
+        "Start-Ups",
+        "User-Likely",
+        "E-Commerce",
+      ],
       required: true,
     },
     topic: {
       type: String,
-      required: true,
+      required: function () { return !this.isPoll; },
     },
     content: {
       type: String,
-      required: true,
+      required: function () { return !this.isPoll; },
     },
+
+    isPoll: {
+      type: Boolean,
+      default: false,
+    },
+
+    pollQuestion: String,
+
+    pollOptions: [
+      {
+        optionText: {
+          type: String,
+        },
+        votes: {
+          type: Number,
+          default: 0,
+        },
+      },
+    ],
+
     likes: {
       type: Number,
       default: 0,

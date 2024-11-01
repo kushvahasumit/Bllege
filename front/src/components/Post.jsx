@@ -1,36 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { HeartIcon, MessageCircle, Share2, MoreHorizontal } from "lucide-react";
-import { usePostStore } from "../store/postStore"; 
+import { HeartIcon, MessageCircle, Share2 } from "lucide-react";
+import { usePostStore } from "../store/postStore"; // Ensure this path is correct
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// const handleShare = (postUrl) => {
-//   navigator.clipboard
-//     .writeText(postUrl)
-//     .then(() => {
-//       toast.success("Link copied to clipboard!", {
-//         position: "top-left",
-//         autoClose: 3000,
-//       });
-//     })
-//     .catch((error) => {
-//       console.error("Error copying link: ", error);
-//       toast.error("Failed to copy the link.");
-//     });
-// };
-
+import axios from "axios"; 
 
 const Post = ({ post, likePost }) => {
-//   const { deletePost } = usePostStore(); 
-//   const [showDropdown, setShowDropdown] = useState(false);
-//   const handleDelete = async () => {
-//     await deletePost(post._id);
-//     window.location.reload(); 
-//   };
+  const { setVote, getVote } = usePostStore();
+  const [userVote, setUserVote] = useState(null);
+  const [pollOptions, setPollOptions] = useState(post.pollOptions);
+  const [votesVisible, setVotesVisible] = useState(false);
 
- 
-    const postUrl = `http://localhost:5173/post/${post._id}`;
+  const API_URL = "http://localhost:5000";
+  useEffect(() => {
+    const fetchVote = async () => {
+      const vote = await getVote(post._id);
+      setUserVote(vote);
+    };
+    fetchVote();
+  }, [getVote, post._id]);
+
+  const handleVote = async(optionIndex) => {
+    if (userVote !== null) {
+      toast.error("You have already voted on this post.");
+      return;
+    }
+
+    try {
+      await axios.post(`${API_URL}/api/post/vote`, {
+        postId: post._id,
+        optionIndex: optionIndex,
+      });
+
+      setVote(post._id, optionIndex);
+
+      // Increase the vote count for the selected option
+      const updatedOptions = [...pollOptions];
+      updatedOptions[optionIndex].votes += 1; // Increment vote count
+      setPollOptions(updatedOptions); // Update local state
+
+      setUserVote(optionIndex); // Update local state
+      setVotesVisible(true); // Show the vote counts
+      toast.success("Vote recorded!", {
+        position: "top-left",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to record vote. Please try again.");
+    }
+  };
 
   return (
     <div className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white relative">
@@ -39,7 +59,7 @@ const Post = ({ post, likePost }) => {
           <img
             src="../src/images/bgrsm.png"
             alt={post.section}
-            className="w-8 h-8"
+            className="w-8 h-8 rounded-full object-cover"
           />
         </div>
         <div>
@@ -61,9 +81,34 @@ const Post = ({ post, likePost }) => {
       </div>
 
       <div className="mb-4">
-        <h3 className="font-bold text-lg mb-1">{post.topic}</h3>
-        <p className="text-gray-700">{post.content}</p>
+        <h3 className="font-bold text-lg mb-1">
+          {post.isPoll ? post.pollQuestion : post.topic}
+        </h3>
+        <p className="text-gray-700">{post.isPoll ? null : post.content}</p>
       </div>
+
+      {post.isPoll && (
+        <ul className="mb-4 bg-gray-100 p-2 rounded-md">
+          {pollOptions.map((option, index) => (
+            <li
+              key={index}
+              className={`flex justify-between py-2 px-3 rounded-md border-b border-gray-300 cursor-pointer mb-1 bg-offWhite hover:bg-slate-200 transition duration-200 ${
+                userVote === index ? "bg-slate-200" : ""
+              }`}
+              onClick={() => handleVote(index)}
+            >
+              <span>{option.optionText}</span>
+              <span className="text-gray-500">
+                {votesVisible
+                  ? userVote === index
+                    ? `You voted`
+                    : `${option.votes} votes`
+                  : null}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <div className="flex justify-between items-center mt-4 border-t pt-2">
         <div className="flex items-center space-x-4">
@@ -72,7 +117,7 @@ const Post = ({ post, likePost }) => {
             className={`flex items-center text-gray-500`}
           >
             <HeartIcon
-              className={`mr-1 hover:fill-lostSouls ${
+              className={`mr-1 hover:fill-lostSouls transition-colors duration-200 ${
                 post.isLiked ? "fill-lostSouls" : "text-lostSouls"
               }`}
             />
@@ -84,30 +129,7 @@ const Post = ({ post, likePost }) => {
           </button>
         </div>
 
-        {/* Three Dots Menu */}
-        {/* <div className="relative">
-          <button
-            className="flex items-center text-gray-500 hover:text-blue-500"
-            onClick={() => setShowDropdown(!showDropdown)} // Toggle dropdown visibility
-          >
-            <MoreHorizontal />
-          </button>
-          {showDropdown && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
-              <button
-                onClick={handleDelete}
-                className="block px-4 py-2 text-red-500 hover:bg-red-100 w-full text-left"
-              >
-                Delete
-              </button>
-            </div>
-          )}
-        </div> */}
-
-        <button
-          // onClick={handleShare(postUrl)}
-          className="flex items-center text-gray-500"
-        >
+        <button className="flex items-center text-gray-500">
           <Share2 className="mr-1 text-lostSouls" />
           <span>Share</span>
         </button>
