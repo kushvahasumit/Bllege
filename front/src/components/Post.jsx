@@ -101,7 +101,7 @@ const Post = ({ post, likePost }) => {
               <span className="text-gray-500">
                 {votesVisible
                   ? userVote === index
-                    ? `You voted`
+                    ? `${option.votes} votes`
                     : `${option.votes} votes`
                   : null}
               </span>

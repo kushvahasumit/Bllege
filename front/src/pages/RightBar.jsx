@@ -49,7 +49,7 @@ const RightBar = () => {
     { label: "Career", to: "/why-bllege-blog-carrer-news-faq" },
     { label: "Terms", to: "/why-bllege-blog-carrer-news-faq" },
     { label: "Newsroom", to: "/why-bllege-blog-carrer-news-faq" },
-    { label: "Updates", to: "/updates" },
+    { label: "Updates", to: "/why-bllege-blog-carrer-news-faq" },
     { label: "Privacy", to: "/why-bllege-blog-carrer-news-faq" },
     { label: "Community", to: "/why-bllege-blog-carrer-news-faq" },
     { label: "FAQs", to: "/why-bllege-blog-carrer-news-faq" },

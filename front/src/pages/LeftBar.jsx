@@ -79,7 +79,7 @@ const LeftBar = () => {
             }`}
           >
             {section.icon}
-            <Link className="ml-2 w-full"  to={section.to}>
+            <Link className="ml-2 w-full" to={section.to}>
               {section.name}
             </Link>
           </li>
@@ -99,9 +99,9 @@ const LeftBar = () => {
               <Link
                 key={linkIndex}
                 to={link.to}
-                className={`p-1 ${
+                className={`p-1 hover:bg-slate-200 ${
                   selectedLink === link.to
-                    ? "bg-slate-300 text-black"
+                    ? "bg-slate-200 text-black rounded-md"
                     : "text-gray-700"
                 }`}
                 onClick={() => handleLinkClick(link.to)}

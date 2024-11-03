@@ -7,50 +7,124 @@ const CreatePost = () => {
   const [section, setSection] = useState("");
   const [topic, setTopic] = useState("");
   const [content, setContent] = useState("");
+  const [isPoll, setIsPoll] = useState(false);
+  const [pollQuestion, setPollQuestion] = useState("");
+  const [pollOptions, setPollOptions] = useState([
+    { optionText: "", votes: 0 },
+    { optionText: "", votes: 0 },
+  ]);
+
   const { createPost } = usePostStore();
   const { user } = useAuthStore();
   const navigate = useNavigate();
 
-  console.log("this is post userid", user._id);
+  const handleToggle = () => {
+    setIsPoll((prev) => !prev);
+    setTopic("");
+    setContent("");
+    setPollQuestion("");
+    setPollOptions([
+      { optionText: "", votes: 0 },
+      { optionText: "", votes: 0 },
+    ]);
+  };
+
+  const handleAddOption = () => {
+    setPollOptions([...pollOptions, { optionText: "", votes: 0 }]);
+  };
+
+  const handleOptionChange = (index, value) => {
+    const newOptions = [...pollOptions];
+    newOptions[index].optionText = value;
+    setPollOptions(newOptions);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!section || !topic || !content) {
-      alert("Please fill in all fields.");
-      return;
+    if (isPoll) {
+      if (
+        !section ||
+        !pollQuestion ||
+        pollOptions.some((opt) => !opt.optionText)
+      ) {
+        alert("Please fill in all fields for the poll.");
+        return;
+      }
+    } else {
+      if (!section || !topic || !content) {
+        alert("Please fill in all fields for the post.");
+        return;
+      }
     }
 
     try {
-      await createPost(user._id, section, topic, content);
+      const postData = {
+        userId: user._id,
+        section,
+        isPoll,
+        pollQuestion,
+        pollOptions,
+        topic,
+        content,
+      };
+
+      await createPost(postData);
       navigate("/feed");
     } catch (error) {
       alert("Error creating post");
     }
   };
 
+  const handleRemoveOption = (index) => {
+    const updatedOptions = pollOptions.filter((_, i) => i !== index);
+    setPollOptions(updatedOptions);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="w-full max-w-5xl p-4 bg-white shadow-lg rounded-lg h-[calc(100vh-50px)] overflow-y-auto custom-scrollbar">
-        <h2 className="text-2xl font-semibold mb- text-center">
-          Create a Blind Post
+        <h2 className="text-2xl font-semibold mb-4 text-center">
+          {isPoll ? "Create a Bllege Poll" : "Create a Bllege Post"}
         </h2>
 
         <div className="flex justify-between mb-2">
           <div>
             <p className="text-sm text-gray-500 pl-1">
-              I am <strong>{user.name}</strong>
+              I am{" "}
+              <strong className="text-lostSouls text-xl">{user.name}</strong>
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500 pr-1">
               Anonymous User from{" "}
-              <strong>{user?.college || "Unknown College"}</strong>
+              <strong className="text-lostSouls text-xl">
+                {user?.college || "Unknown College"}
+              </strong>
             </p>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <div className="flex justify-center mb-4">
+          <button
+            onClick={handleToggle}
+            className={`px-6 py-2 rounded-l-lg ${
+              !isPoll ? "bg-lostSouls text-white" : "bg-slate-200"
+            }`}
+          >
+            Post
+          </button>
+          <button
+            onClick={handleToggle}
+            className={`px-6 py-2 rounded-r-lg ${
+              isPoll ? "bg-lostSouls text-white" : "bg-slate-200"
+            }`}
+          >
+            Poll
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="mb-20">
           <div className="mb-2">
             <label
               htmlFor="section"
@@ -62,64 +136,116 @@ const CreatePost = () => {
               id="section"
               value={section}
               onChange={(e) => setSection(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-3 max-h-12 overflow-y-auto"
-              style={{ maxHeight: "150px", overflowY: "auto" }}
+              className="w-full border border-gray-300 rounded-lg p-3"
               required
             >
               <option value="">Select Section</option>
               <option value="Tech">Tech</option>
               <option value="Cars">Cars</option>
               <option value="HR">HR</option>
-              <option value="E-Commerce">Ecom</option>
+              <option value="E-Commerce">E-Commerce</option>
               <option value="AI-Trends">AI Trends</option>
-              <option value="Start-Ups">Startups</option>
+              <option value="Start-Ups">Start-Ups</option>
               <option value="Health">Health</option>
-              <option value="User-Likely">User Likely</option>
             </select>
           </div>
 
-          <div className="mb-2">
-            <label
-              htmlFor="topic"
-              className="block font-medium text-gray-700 mb-2"
-            >
-              Topic
-            </label>
-            <input
-              id="topic"
-              type="text"
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-3"
-              placeholder="Enter the post topic"
-              autoComplete="off"
-              required
-            />
-          </div>
-
-          <div className="mb-2">
-            <label
-              htmlFor="content"
-              className="block font-medium text-gray-700 mb-2"
-            >
-              Content
-            </label>
-            <textarea
-              id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="w-full h-40 border border-gray-300 rounded-lg p-3"
-              placeholder="Write your post content here"
-              autoComplete="off"
-              required
-            />
-          </div>
+          {!isPoll ? (
+            <>
+              <div className="mb-2">
+                <label
+                  htmlFor="topic"
+                  className="block font-medium text-gray-700 mb-2"
+                >
+                  Topic
+                </label>
+                <input
+                  id="topic"
+                  type="text"
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg p-3"
+                  placeholder="Enter the post topic"
+                  required
+                />
+              </div>
+              <div className="mb-2">
+                <label
+                  htmlFor="content"
+                  className="block font-medium text-gray-700 mb-2"
+                >
+                  Content
+                </label>
+                <textarea
+                  id="content"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="w-full h-40 border border-gray-300 rounded-lg p-3"
+                  placeholder="Write your post content here"
+                  required
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="mb-2">
+                <label
+                  htmlFor="pollQuestion"
+                  className="block font-medium text-gray-700 mb-2"
+                >
+                  Poll Question
+                </label>
+                <input
+                  id="pollQuestion"
+                  type="text"
+                  value={pollQuestion}
+                  onChange={(e) => setPollQuestion(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg p-3"
+                  placeholder="Enter the poll question"
+                  required
+                />
+              </div>
+              <div className="mb-2">
+                <label className="block font-medium text-gray-700 mb-2">
+                  Poll Options
+                </label>
+                {pollOptions.map((option, index) => (
+                  <div key={index} className="flex items-center mb-2">
+                    <input
+                      type="text"
+                      value={option.optionText}
+                      onChange={(e) =>
+                        handleOptionChange(index, e.target.value)
+                      }
+                      className="w-full border border-gray-300 rounded-lg p-3"
+                      placeholder={`Option ${index + 1}`}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveOption(index)}
+                      className="ml-2 text-lostSouls hover:text-red-700 font-semibold"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={handleAddOption}
+                  className="text-lostSouls text-sm mt-2 hover:underline"
+                >
+                  + Add another option
+                </button>
+              </div>
+            </>
+          )}
 
           <button
             type="submit"
-            className="w-full bg-lostSouls text-white rounded-lg py-3 px-6 mb-20"
+            className="w-full bg-lostSouls text-white rounded-lg py-3 px-6 mt-4 hover:bg-opacity-90"
           >
-            Create Post
+            {isPoll ? "Create Poll" : "Create Post"}
           </button>
         </form>
       </div>

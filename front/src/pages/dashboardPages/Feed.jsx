@@ -40,11 +40,17 @@ const Feed = () => {
         {isLoading && <p>Loading posts...</p>}
         {error && <p>Error loading posts: {error}</p>}
         {!isLoading ? (
-          posts.map((post) => (
-            <Post key={post._id} post={post} likePost={likePost} />
-          ))
+          posts && posts.length > 0 ? (
+            posts.map((post) =>
+              post && post._id ? (
+                <Post key={post._id} post={post} likePost={likePost} />
+              ) : null
+            )
+          ) : (
+            <p>No posts available.</p>
+          )
         ) : (
-          <p>No posts available.</p>
+          <p>Fetching...</p>
         )}
       </div>
     </div>
