@@ -77,12 +77,12 @@ console.log("chat Response", messages);
             }`}
           >
             <div
-              className={`relative p-1 rounded-lg shadow-md inline-block  ${
+              className={`relative p-1 w-auto rounded-lg shadow-md inline-block  ${
                 msg.sender === user?.name
                   ? "bg-[#3D3D3D] text-[#F9F9F9]"
                   : "bg-[#E6E6E6] text-[#2E2E2E]"
               }`}
-              style={{ minWidth: "100px", maxWidth: "75%" }}
+              style={{ minWidth: "150px", maxWidth: "75%" }}
             >
               <p className="font-semibold text-xs text-gray-400">
                 {msg.sender}

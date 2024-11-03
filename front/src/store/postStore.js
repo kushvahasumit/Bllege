@@ -116,6 +116,16 @@ export const usePostStore = create((set) => ({
               }
             : post
         ),
+
+        pollPosts: state.pollPosts.map((post) =>
+          post._id === postId
+            ? {
+                ...post,
+                likes: isLiked ? post.likes - 1 : post.likes + 1,
+                isLiked: !isLiked,
+              }
+            : post
+        ),
       }));
 
       return response.data;

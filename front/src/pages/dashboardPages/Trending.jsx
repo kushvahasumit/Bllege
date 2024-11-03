@@ -27,9 +27,11 @@ const Trending = () => {
         )}
         {!isLoading &&
           trendingPosts.length > 0 &&
-          trendingPosts.map((post) => (
-            <Post key={post._id} post={post} likePost={likePost} />
-          ))}
+          trendingPosts.map((post) =>
+            post && post._id ? (
+              <Post key={post._id} post={post} likePost={likePost} />
+            ) : null
+          )}
       </div>
     </div>
   );

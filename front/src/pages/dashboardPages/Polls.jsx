@@ -25,9 +25,11 @@ const Polls = () => {
         {!isLoading && pollPosts.length === 0 && <p>No polls available.</p>}
         {!isLoading &&
           pollPosts.length > 0 &&
-          pollPosts.map((post) => (
-            <Post key={post._id} post={post} likePost={likePost} />
-          ))}
+          pollPosts.map((post) =>
+            post && post._id ? (
+              <Post key={post._id} post={post} likePost={likePost} />
+            ) : null
+          )}
       </div>
     </div>
   );

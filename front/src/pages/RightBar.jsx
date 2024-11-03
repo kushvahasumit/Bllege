@@ -40,7 +40,7 @@ const RightBar = () => {
       to: "/Blind-Thoughts/E-Commerce",
     },
     { title: "AI Trends is hot now a days", to: "/Blind-Thoughts/AI-Trends" },
-    { title: "Best startup for Placements?", to: "/Blind-Thoughts/startups" },
+    { title: "Best startup for Placements?", to: "/Blind-Thoughts/Start-Ups" },
   ];
 
   const footerLinks = [
@@ -57,14 +57,13 @@ const RightBar = () => {
 
   return (
     <div className="h-full w-full flex flex-col p-4  space-y-4 overflow-y-scroll custom-scrollbar mt-1">
-      <div className="flex justify-between space-x-0 border border-stone-300 rounded-2xl h-full p-2">
-        
-        <ul className="">
-          <h1 className="text-xl pl-1">Our Sponsored</h1>
+      <div className="space-x-0 border border-stone-300 rounded-2xl h-full p-2">
+        <h1 className="text-xl pl-1">Our Sponsored</h1>
+        <ul className="flex justify-between">
           {sponsored &&
             sponsored.slice(0, 3).map((value, index) => (
               <li key={index} className="text-gray-700 hover:text-black p-1">
-                <p>{value.title}</p>
+                <p>{value.title} •</p>
               </li>
             ))}
         </ul>
@@ -81,7 +80,7 @@ const RightBar = () => {
       <ul className="space-x-0 mt-3 border border-stone-300 rounded-2xl h-full p-2">
         <h2 className="text-xl p-1">Featured Content</h2>
         {featuredContent &&
-          featuredContent.slice(0,4).map((content, index) => (
+          featuredContent.slice(0, 4).map((content, index) => (
             <li key={index} className="text-gray-700 hover:text-black p-1">
               <Link to={content.to}>{content.title}</Link>
             </li>
