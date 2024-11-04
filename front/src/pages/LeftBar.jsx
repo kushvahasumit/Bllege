@@ -7,13 +7,12 @@ import {
   Vote,
 } from "lucide-react";
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../index.css";
 
 const LeftBar = () => {
 
   const [selectedLink, setSelectedLink] = useState("/feed"); 
-  const location = useLocation();
 
   const upperLinks = [
     { name: "Feed", to: "/feed", icon: <GalleryVerticalEndIcon /> },

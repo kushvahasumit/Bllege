@@ -19,7 +19,18 @@ import CreatePost from "./pages/CreatePost";
 import SectionPost from "./pages/dashboardPages/SectionPost";
 import ChatRoom from "./pages/dashboardPages/ChatRoom";
 import Faq from "./pages/Faq";
+import Placement from "./pages/navPages/Placement";
+import Review from "./pages/navPages/Review";
+import Trends from "./pages/navPages/Trends";
+import Nav from "./pages/Nav";
 
+const authRoutes = [
+  "/sign-up",
+  "/login",
+  "/forget-password",
+  "/email-verification",
+  "/reset-password/:token",
+];
 // Redirect if the user is authenticated and verified
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -49,7 +60,7 @@ const ProtectAuthenticatedUser = ({ children }) => {
 };
 
 function App() {
-  const { isCheckAuthenticated, checkUserAuth, user, isAuthenticated } =
+  const { isCheckAuthenticated, checkUserAuth, user, isAuthenticated, logOut } =
     useAuthStore();
   const location = useLocation();
 
@@ -63,12 +74,15 @@ function App() {
 
   if (isCheckAuthenticated) return <LoadingSpinner />;
 
-  const shouldShowImageCarousel =
-    (!isAuthenticated || !user?.isVerified) && location.pathname !== "/";
+    const isAuthRoute = authRoutes.some((path) =>
+      location.pathname.startsWith(path)
+    );
 
   return (
     <div className="h-screen flex bg-ofFwhite text-black overflow-hidden">
       <div className="w-full">
+        {!isAuthRoute && <Nav user={user} logOut={logOut} />}
+
         <Routes>
           <Route path="/" element={<Dashboard />}>
             <Route index element={<Feed />} />
@@ -81,9 +95,11 @@ function App() {
             <Route path="trending" element={<Trending />} />
             <Route path="createpost" element={<CreatePost />} />
             <Route path="/:sectionhead/:section" element={<SectionPost />} />
-            <Route path="why-bllege-blog-carrer-news-faq" element={<Faq />} /> 
+            <Route path="why-bllege-blog-carrer-news-faq" element={<Faq />} />
           </Route>
-
+          <Route path="/placements" element={<Placement />} />
+          <Route path="/reviews" element={<Review />} />
+          <Route path="/trends" element={<Trends />} />
           <Route
             path="/sign-up"
             element={
@@ -131,7 +147,7 @@ function App() {
         </Routes>
       </div>
 
-      {shouldShowImageCarousel && (
+      {isAuthRoute && (
         <div className="w-2/3 hidden sm:hidden md:block">
           <ImageCarousel />
         </div>
