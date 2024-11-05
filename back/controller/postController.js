@@ -40,6 +40,19 @@ export const getAllPost = async (req, res) => {
   }
 };
 
+export const getPostById = async(req,res) =>{
+  const { postId } = req.params;
+  try {
+    const post = await Post.findById(postId).populate("user");
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    return res.status(200).json(post);
+  } catch (error) {
+    return res.status(500).json({ message: "Server error", error });
+  }
+}
+
 export const getUserPost = async (req, res) => {
   const { userId } = req.params;
 
@@ -60,18 +73,13 @@ export const getUserPost = async (req, res) => {
 
 export const getSectionPosts = async (req, res) => {
   const { section } = req.params;
-
   try {
-    const specificSectionPosts = await Post.find({ section })
-      .populate("user")
-      .sort({ createdAt: -1 });
-
+    const specificSectionPosts = await Post.find({ section }).populate("user");
     if (!specificSectionPosts.length) {
       return res.status(404).json({
         message: `No posts found for user in the ${section} section`,
       });
     }
-
     res.status(200).json(specificSectionPosts);
   } catch (error) {
     res.status(500).json({ message: "server error", error: error.message });
@@ -119,11 +127,10 @@ export const like = async (req, res) => {
 
 export const comment = async (req, res) => {
     const { postId } = req.params;
-    console.log(postId);
-   const { userId, comment } = req.body;
+    const { userId, comment} = req.body;
 
   try {
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId).populate("user");
     if (!post) return res.status(404).json({ message: "Post not found" });
 
     post.comments.push({ user: userId, comment });
@@ -135,6 +142,35 @@ export const comment = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
+};
+
+export const likeComment = async (req,res) =>{
+    const { postId, commentId } = req.params;
+    const { userId } = req.body;
+
+    try {
+      const post = await Post.findById(postId).populate("user");
+      if (!post) return res.status(404).json({ message: "Post not found" });
+
+      const comment = post.comments.id(commentId);
+      if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+      const hasLiked = comment.likes.includes(userId);
+
+      if (hasLiked) {
+        // Unlike
+        comment.likes.pull(userId);
+        await post.save();
+        return res.status(200).json({ message: "Like removed", comment });
+      } else {
+        // Like
+        comment.likes.push(userId);
+        await post.save();
+        return res.status(200).json({ message: "Comment liked", comment });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
 };
 
 export const vote = async (req, res) => {

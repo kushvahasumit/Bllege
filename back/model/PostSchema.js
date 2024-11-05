@@ -31,11 +31,15 @@ const postSchema = new mongoose.Schema(
     },
     topic: {
       type: String,
-      required: function () { return !this.isPoll; },
+      required: function () {
+        return !this.isPoll;
+      },
     },
     content: {
       type: String,
-      required: function () { return !this.isPoll; },
+      required: function () {
+        return !this.isPoll;
+      },
     },
 
     isPoll: {
@@ -69,6 +73,7 @@ const postSchema = new mongoose.Schema(
         },
         comment: String,
         createdAt: { type: Date, default: Date.now },
+        likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
       },
     ],
   },

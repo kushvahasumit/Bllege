@@ -19,6 +19,7 @@ export const usePostStore = create((set) => ({
   error: null,
   votes: {},
   pollPosts: [],
+  post: null,
 
   fetchAllPost: async () => {
     set({ isLoading: true, error: null });
@@ -33,6 +34,16 @@ export const usePostStore = create((set) => ({
         isLoading: false,
       });
       throw error;
+    }
+  },
+
+  fetchPostById: async (postId) => {
+    set({ loading: true });
+    try {
+      const response = await axios.get(`${API_URL}/api/post/${postId}`);
+      set({ post: response.data, loading: false, error: null });
+    } catch (error) {
+      set({ post: null, loading: false, error: error.message });
     }
   },
 
@@ -161,6 +172,48 @@ export const usePostStore = create((set) => ({
     });
   },
 
+  addComment: async (postId, userId, comment) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/post/${postId}/comment`,
+        {
+          userId,
+          comment,
+        }
+      );
+      set((state) => ({
+        post: {
+          ...state.post,
+          comments: [...state.post.comments, response.data.comment],
+        },
+      }));
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
+  },
+
+  likeComment: async (postId, commentId, userId) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/post/${postId}/comments/${commentId}/like`,
+        { userId }
+      );
+
+      set((state) => ({
+        post: {
+          ...state.post,
+          comments: state.post.comments.map((comment) =>
+            comment._id === commentId
+              ? { ...comment, likes: response.data.comment.likes }
+              : comment
+          ),
+        },
+      }));
+    } catch (error) {
+      console.error("Error liking/unliking comment:", error);
+    }
+  },
+
   fetchTrendingPosts: async (limit = 50) => {
     set({ isLoading: true });
     try {
@@ -183,10 +236,10 @@ export const usePostStore = create((set) => ({
 
   fetchSectionPosts: async (sectionhead, section) => {
     set({ isLoading: true, error: null });
-    console.log(sectionhead, "+", section);
     try {
-      const response = await axios.get(`${API_URL}/api/post/${section}`);
-      console.log("this is section post", response.data);
+      const response = await axios.get(
+        `${API_URL}/api/post/section/${section}`
+      );
       set({ sectionPosts: response.data, isLoading: false });
     } catch (error) {
       set({

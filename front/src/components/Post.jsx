@@ -5,12 +5,14 @@ import { usePostStore } from "../store/postStore"; // Ensure this path is correc
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"; 
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ post, likePost }) => {
   const { setVote, getVote } = usePostStore();
   const [userVote, setUserVote] = useState(null);
   const [pollOptions, setPollOptions] = useState(post.pollOptions);
   const [votesVisible, setVotesVisible] = useState(false);
+  const navigate = useNavigate();
 
   const API_URL = "http://localhost:5000";
   useEffect(() => {
@@ -20,6 +22,10 @@ const Post = ({ post, likePost }) => {
     };
     fetchVote();
   }, [getVote, post._id]);
+
+  const openComments = () => {
+    navigate(`/post/${post._id}/comment`);
+  };
 
   const handleVote = async(optionIndex) => {
     if (userVote !== null) {
@@ -53,7 +59,8 @@ const Post = ({ post, likePost }) => {
   };
 
   return (
-    <div className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white relative">
+    <div
+      className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white relative">
       <div className="flex items-center mb-3">
         <div className="w-10 h-10 bg-gray-200 rounded-full mr-3 flex items-center justify-center">
           <img
@@ -123,7 +130,10 @@ const Post = ({ post, likePost }) => {
             />
             <span>{post.likes} Likes</span>
           </button>
-          <button className="flex items-center text-gray-500">
+          <button
+            onClick={openComments}
+            className="flex items-center text-gray-500"
+          >
             <MessageCircle className="mr-1 text-lostSouls" />
             <span>{post.comments.length} Comments</span>
           </button>
