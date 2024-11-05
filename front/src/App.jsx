@@ -84,7 +84,13 @@ function App() {
     <div className="h-screen flex bg-ofFwhite text-black overflow-hidden">
       <div className="w-full">
         {!isAuthRoute && <Nav user={user} logOut={logOut} />}
-        <ToastContainer />
+        <ToastContainer
+          autoClose={3000}
+          hideProgressBar={true}
+          closeOnClick
+          draggable
+          pauseOnHover
+        />
         <Routes>
           <Route path="/" element={<Dashboard />}>
             <Route index element={<Feed />} />

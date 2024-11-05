@@ -4,6 +4,7 @@ import { PlusCircle } from "lucide-react";
 import { usePostStore } from "../../store/postStore";
 import { useNavigate } from "react-router-dom";
 import Post from "../../components/Post.jsx";
+import { useAuthStore } from "../../store/authStore.js";
 
 const StartPost = ({ onClick }) => {
   return (
@@ -27,6 +28,7 @@ const Feed = () => {
     error,
   } = usePostStore();
   const navigate = useNavigate();
+  const {user} = useAuthStore();
 
   useEffect(() => {
     fetchAllPost();
@@ -43,7 +45,11 @@ const Feed = () => {
           posts && posts.length > 0 ? (
             posts.map((post) =>
               post && post._id ? (
-                <Post key={post._id} post={post} likePost={likePost(user._id)} />
+                <Post
+                  key={post._id}
+                  post={post}
+                  likePost={() => likePost(post._id, post.isLiked, user._id)}
+                />
               ) : null
             )
           ) : (

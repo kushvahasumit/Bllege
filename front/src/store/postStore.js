@@ -93,6 +93,8 @@ export const usePostStore = create((set) => ({
   },
 
   likePost: async (postId, isLiked, userId) => {
+    console.log(postId)
+    console.log(userId)
     try {
       const response = await axios.post(`${API_URL}/api/post/${postId}/like`, {
         userId,

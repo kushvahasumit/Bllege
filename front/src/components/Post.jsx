@@ -61,6 +61,19 @@ const Post = ({ post, likePost }) => {
     }
   };
 
+  const handleShareClick = () => {
+    const linkToCopy = `http://localhost:5173/post/${post._id}/comment`;
+    navigator.clipboard
+      .writeText(linkToCopy)
+      .then(() => {
+        toast.success("Link copied to clipboard!");
+      })
+      .catch((error) => {
+        console.error("Error copying link:", error);
+        toast.error("Failed to copy link.");
+      });
+  };
+
   return (
     <div className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white relative">
       <div className="flex items-center mb-3">
@@ -143,7 +156,10 @@ const Post = ({ post, likePost }) => {
           </button>
         </div>
 
-        <button className="flex items-center text-gray-500">
+        <button
+          className="flex items-center text-gray-500"
+          onClick={handleShareClick}
+        >
           <Share2 className="mr-1 text-lostSouls" />
           <span>Share</span>
         </button>
