@@ -30,7 +30,7 @@ const SectionPost = () => {
   }, [sectionhead, section, fetchSectionPosts, listenForPostLikes]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto mt-0 mb-2 overflow-y-auto h-[calc(100vh-100px)] custom-scrollbar">
       <div
         className="h-32 bg-teal-100 bg-cover bg-center"
         style={{
@@ -70,7 +70,7 @@ const SectionPost = () => {
         </button>
       </div>
 
-      <div className="mt-6 mb-16 overflow-y-auto h-[calc(100vh-100px)] custom-scrollbar">
+      <div className="mt-6 mb-10">
         {isLoading && <p>Loading posts...</p>}
         {error && <p className="text-red-500">{error}</p>}
         {!isLoading && sectionPosts.length === 0 && (

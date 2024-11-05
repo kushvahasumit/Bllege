@@ -38,7 +38,7 @@ const Feed = () => {
   return (
     <div className="w-full max-w-3xl mx-auto">
       <StartPost onClick={() => navigate("/createpost")} />
-      <div className="mt-6 mb-16 overflow-y-auto h-[calc(100vh-80px)] custom-scrollbar">
+      <div className="mt-6 mb-20 overflow-y-auto h-[calc(75vh-5px)] custom-scrollbar">
         {isLoading && <p>Loading posts...</p>}
         {error && <p>Error loading posts: {error}</p>}
         {!isLoading ? (

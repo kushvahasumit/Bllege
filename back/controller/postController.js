@@ -211,7 +211,7 @@ export const vote = async (req, res) => {
 
 export const polls = async(req,res) => {
   try {
-    const allPolls = await Post.find({isPoll : true});
+    const allPolls = await Post.find({isPoll : true}).populate("user");
 
     res.status(200).json(allPolls);
   } catch (err) {

@@ -25,6 +25,7 @@ import Trends from "./pages/navPages/Trends";
 import Nav from "./pages/Nav";
 import CommentPage from "./pages/dashboardPages/CommentPage";
 import { ToastContainer } from "react-toastify";
+import MyPost from "./pages/dashboardPages/MyPost";
 
 const authRoutes = [
   "/sign-up",
@@ -105,6 +106,7 @@ function App() {
             <Route path="/:sectionhead/:section" element={<SectionPost />} />
             <Route path="why-bllege-blog-carrer-news-faq" element={<Faq />} />
             <Route path="post/:postId/comment" element={<CommentPage />} />
+            <Route path="myprofile/activity/post" element={<MyPost />} />
           </Route>
           <Route path="/placements" element={<Placement />} />
           <Route path="/reviews" element={<Review />} />

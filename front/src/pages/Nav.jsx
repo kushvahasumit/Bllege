@@ -12,7 +12,6 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 
 const Nav = ({ user, logOut }) => {
-
   const navLinks = [
     { name: "Community", to: "/", icon: <Home /> },
     { name: "Placements", to: "/placements", icon: <Briefcase /> },
@@ -21,14 +20,14 @@ const Nav = ({ user, logOut }) => {
   ];
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedPage,setSelectedPage] = useState("/");
+  const [selectedPage, setSelectedPage] = useState("/");
   const navigate = useNavigate();
 
   const handleClickPage = (to) => {
     setSelectedPage(to);
-    navigate(to); 
+    navigate(to);
   };
-   
+
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -37,7 +36,7 @@ const Nav = ({ user, logOut }) => {
   const handleLogout = async () => {
     try {
       await logOut();
-      navigate("/"); 
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +56,6 @@ const Nav = ({ user, logOut }) => {
     <nav className="shadow-md px-6 py-2 flex items-center space-x-4">
       <div className="flex items-center">
         <a href="/">
-          {" "}
           <img
             src="./src/images/bgrsm.png"
             alt="Bllege"
@@ -104,30 +102,35 @@ const Nav = ({ user, logOut }) => {
               Bllege Post
             </button>
 
-            <UserCircle
-              className="h-10 w-10 text-gray-700 cursor-pointer"
-              onClick={toggleDropdown}
-            />
+            <div>
+              <UserCircle
+                className="h-10 w-10 text-gray-700 cursor-pointer"
+                onClick={toggleDropdown}
+              />
 
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                <button className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-slate-200">
-                  <p> <strong>{user.name}</strong> </p>
-                </button>
-                <button className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-slate-200">
-                  <Activity className="mr-2" />
-                  My Activity
-                </button>
-                <button
-                  className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-slate-200"
-                  onClick={handleLogout}
-                >
-                  <LogOut className="mr-2" />
-                  Logout
-                </button>
-                
-              </div>
-            )}
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                  <button className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-slate-200">
+                    <p>
+                      <strong>{user.name}</strong>
+                    </p>
+                  </button>
+                  <Link to="/myprofile/activity/post">
+                    <button className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-slate-200">
+                      <Activity className="mr-2" />
+                      My Activity
+                    </button>
+                  </Link>
+                  <button
+                    className="flex items-center px-4 py-2 w-full text-gray-700 hover:bg-slate-200"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="mr-2" />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         ) : (
           <>

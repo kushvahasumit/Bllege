@@ -20,13 +20,14 @@ export const usePostStore = create((set) => ({
   votes: {},
   pollPosts: [],
   post: null,
+  myPosts: [],
 
   fetchAllPost: async () => {
     set({ isLoading: true, error: null });
 
     try {
       const response = await axios.get(`${API_URL}/api/post/getAllPosts`);
-      console.log(response);
+      console.log("fethed all Posts", response.data);
       set({ posts: response.data, isLoading: false });
     } catch (error) {
       set({
@@ -93,8 +94,6 @@ export const usePostStore = create((set) => ({
   },
 
   likePost: async (postId, isLiked, userId) => {
-    console.log(postId)
-    console.log(userId)
     try {
       const response = await axios.post(`${API_URL}/api/post/${postId}/like`, {
         userId,
@@ -107,7 +106,7 @@ export const usePostStore = create((set) => ({
         const toggleLike = (post) => ({
           ...post,
           likes: updatedPost.likes,
-          isLiked: !isLiked, 
+          isLiked: !isLiked,
         });
 
         return {
@@ -123,10 +122,13 @@ export const usePostStore = create((set) => ({
           pollPosts: state.pollPosts.map((post) =>
             post._id === postId ? toggleLike(post) : post
           ),
+          myPosts: state.myPosts.map((post) =>
+            post._id === postId ? toggleLike(post) : post
+          ),
         };
       });
 
-      return response.data; 
+      return response.data;
     } catch (error) {
       console.error(
         "Error liking the post:",
@@ -155,11 +157,16 @@ export const usePostStore = create((set) => ({
             ? updatedPost
             : state.post;
 
+        const updateMyPost = state.myPosts.map((post) =>
+          post._id === updatedPost._id ? updatedPost : post
+        );
+
         return {
           sectionPosts: updateSectionPost,
           trendingPosts: updatedTrendingPosts,
           posts: updatedAllPosts,
           post: updatePostById,
+          myPosts: updateMyPost,
         };
       });
     });
@@ -216,8 +223,10 @@ export const usePostStore = create((set) => ({
       }
 
       const allPosts = await response.json();
+      const sortedPosts = allPosts.sort(
+        (a, b) => b.likes.length - a.likes.length
+      );
 
-      const sortedPosts = allPosts.sort((a, b) => b.likes - a.likes);
       const topPosts = sortedPosts.slice(0, limit);
 
       set({ trendingPosts: topPosts, isLoading: false, error: null });
@@ -252,17 +261,34 @@ export const usePostStore = create((set) => ({
     }
   },
 
-  // deletePost: async (postId)=>{
-  //   console.log(postId);
-  //  try {
-  //   const response = await axios.delete(`${API_URL}/${postId}`);
-  //   console.log(response.data);
+  fetchUserPosts: async (userId) => {
+    console.log("zustand fetch", userId);
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/post/getUserPosts/${userId}`
+      );
+      console.log("thissi res ", response.data);
+      set({ myPosts: response.data, isLoading: false });
+    } catch (error) {
+      set({
+        error: error.response ? error.response.data.message : "Server error",
+        isLoading: false,
+      });
+    }
+  },
 
-  //   return response.data;
-  //  } catch (error) {
-  //   console.error("Error in deleting the post:", error.response.data);
-  //  }
-  // }
+  deletePost: async (postId) => {
+    console.log(postId);
+    try {
+      const response = await axios.delete(`${API_URL}/api/post/${postId}`);
+      console.log(response.data);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error in deleting the post:", error.response.data);
+    }
+  },
 
   toggleFollow: (userId) =>
     set((state) => ({
