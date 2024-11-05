@@ -19,9 +19,6 @@ const PostDetail = () => {
     listenForPostLikes,
   } = usePostStore();
   const { user } = useAuthStore();
-
-  console.log("this is post",post)
-
   const [commentText, setCommentText] = useState("");
 
   useEffect(() => {
@@ -31,10 +28,12 @@ const PostDetail = () => {
 
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return;
+
     try {
       await addComment(postId, user._id, commentText);
       toast.success("Comment added successfully!");
       setCommentText("");
+      fetchPostById(postId);
     } catch (err) {
       toast.error("Failed to add comment.");
     }
@@ -43,7 +42,6 @@ const PostDetail = () => {
     const handleLikeComment = async (commentId) => {
     if (post?._id && user?._id) {
         await likeComment(post._id, commentId, user._id);
-        toast.success("Liked the comment!");
     } else {
         toast.error("Unable to like the comment.");
     }
@@ -52,7 +50,6 @@ const PostDetail = () => {
   const handleLikePost = async (commentId) => {
     try {
       await likePost(post._id, commentId, user._id);
-      toast.success("Liked the post!");
     } catch (err) {
       toast.error("Failed to like the post.");
     }
@@ -94,32 +91,42 @@ const PostComments = ({ comments = [], likeComment, userId }) => (
     <ul className="space-y-4">
       {comments.length > 0 ? (
         comments.map((comment) => {
-          const isLiked = comment.likes.includes(userId);
+          const isLiked = comment?.likes?.includes(userId) || false;
           return (
             <li
-              key={comment._id}
-              className="border-b pb-4 flex justify-between items-center"
+              key={comment?._id}
+              className="border-b pb-4 flex items-start space-x-3"
             >
-              <div>
-                <p className="font-semibold text-gray-800">
-                  {comment.username}
-                </p>
-                <p className="text-sm text-gray-600">
-                  {new Date(comment.createdAt).toLocaleString()}
-                </p>
-                <p className="text-gray-800">{comment.comment}</p>
-              </div>
-              <button
-                onClick={() => likeComment(comment._id)}
-                className="text-gray-500 flex items-center"
-              >
-                <HeartIcon
-                  className={`mr-1 hover:fill-lostSouls ${
-                    isLiked ? "fill-lostSouls" : ""
-                  }`}
+              <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                <img
+                  src="https://images.unsplash.com/photo-1458419948946-19fb2cc296af?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cXVlc3Rpb24lMjBtYXJrfGVufDB8fDB8fHww"
+                  alt="Hidden user"
+                  className="w-full h-full object-cover"
                 />
-                <span>{comment.likes.length || 0} Likes</span>
-              </button>
+              </div>
+              <div className="flex-1">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="text-xs text-gray-500">
+                      {new Date(comment?.createdAt).toLocaleString()}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => likeComment(comment?._id)}
+                    className="text-gray-500 flex items-center space-x-1 hover:text-lostSouls"
+                  >
+                    <HeartIcon
+                      className={`w-5 h-5 ${isLiked ? "fill-lostSouls" : ""}`}
+                    />
+                    <span className="text-sm">
+                      {comment?.likes?.length || 0}
+                    </span>
+                  </button>
+                </div>
+                <p className="text-gray-700 font-medium mt-2">
+                  {comment?.comment}
+                </p>
+              </div>
             </li>
           );
         })
@@ -131,7 +138,7 @@ const PostComments = ({ comments = [], likeComment, userId }) => (
 );
 
 const CommentInput = ({ commentText, setCommentText, onCommentSubmit }) => (
-  <div className="flex border p-2 border-lostSouls rounded-lg items-center h-24 mb-18">
+  <div className="flex border p-2 border-lostSouls rounded-lg items-center h-24 mb-1">
     <input
       type="text"
       value={commentText}

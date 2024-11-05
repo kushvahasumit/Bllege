@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { HeartIcon, MessageCircle, Share2 } from "lucide-react";
-import { usePostStore } from "../store/postStore"; // Ensure this path is correct
+import { usePostStore } from "../store/postStore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"; 
 import { useNavigate } from "react-router-dom";
+import bgrsmImage from "../images/bgrsm.png";
+import { useAuthStore } from "../store/authStore";
 
 const Post = ({ post, likePost }) => {
   const { setVote, getVote } = usePostStore();
+  const { user } = useAuthStore();
   const [userVote, setUserVote] = useState(null);
   const [pollOptions, setPollOptions] = useState(post.pollOptions);
   const [votesVisible, setVotesVisible] = useState(false);
@@ -59,12 +62,11 @@ const Post = ({ post, likePost }) => {
   };
 
   return (
-    <div
-      className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white relative">
+    <div className="p-4 border border-gray-200 rounded-lg mb-4 shadow-md bg-white relative">
       <div className="flex items-center mb-3">
         <div className="w-10 h-10 bg-gray-200 rounded-full mr-3 flex items-center justify-center">
           <img
-            src="../src/images/bgrsm.png"
+            src={bgrsmImage}
             alt={post.section}
             className="w-8 h-8 rounded-full object-cover"
           />
@@ -120,7 +122,7 @@ const Post = ({ post, likePost }) => {
       <div className="flex justify-between items-center mt-4 border-t pt-2">
         <div className="flex items-center space-x-4">
           <button
-            onClick={() => likePost(post._id, post.isLiked)}
+            onClick={() => likePost(post._id, post.isLiked, user._id)}
             className={`flex items-center text-gray-500`}
           >
             <HeartIcon
@@ -128,7 +130,9 @@ const Post = ({ post, likePost }) => {
                 post.isLiked ? "fill-lostSouls" : "text-lostSouls"
               }`}
             />
-            <span>{post.likes} Likes</span>
+            <span>
+              {Array.isArray(post.likes) ? post.likes.length : 0}Likes
+            </span>
           </button>
           <button
             onClick={openComments}

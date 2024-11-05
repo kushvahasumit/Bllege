@@ -92,54 +92,39 @@ export const usePostStore = create((set) => ({
     }
   },
 
-  likePost: async (postId, isLiked) => {
+  likePost: async (postId, isLiked, userId) => {
     try {
-      const response = await axios.post(`${API_URL}/api/post/${postId}/like`);
-      console.log("This is like response", response.data);
+      const response = await axios.post(`${API_URL}/api/post/${postId}/like`, {
+        userId,
+      });
 
-      set((state) => ({
-        posts: state.posts.map((post) =>
-          post._id === postId
-            ? {
-                ...post,
-                likes: isLiked ? post.likes - 1 : post.likes + 1,
-                isLiked: !isLiked,
-              }
-            : post
-        ),
+      console.log("This is like response:", response.data);
 
-        trendingPosts: state.trendingPosts.map((post) =>
-          post._id === postId
-            ? {
-                ...post,
-                likes: isLiked ? post.likes - 1 : post.likes + 1,
-                isLiked: !isLiked,
-              }
-            : post
-        ),
+      const updatedPost = response.data.post;
+      set((state) => {
+        const toggleLike = (post) => ({
+          ...post,
+          likes: updatedPost.likes,
+          isLiked: !isLiked, 
+        });
 
-        sectionPosts: state.sectionPosts.map((post) =>
-          post._id === postId
-            ? {
-                ...post,
-                likes: isLiked ? post.likes - 1 : post.likes + 1,
-                isLiked: !isLiked,
-              }
-            : post
-        ),
+        return {
+          posts: state.posts.map((post) =>
+            post._id === postId ? toggleLike(post) : post
+          ),
+          trendingPosts: state.trendingPosts.map((post) =>
+            post._id === postId ? toggleLike(post) : post
+          ),
+          sectionPosts: state.sectionPosts.map((post) =>
+            post._id === postId ? toggleLike(post) : post
+          ),
+          pollPosts: state.pollPosts.map((post) =>
+            post._id === postId ? toggleLike(post) : post
+          ),
+        };
+      });
 
-        pollPosts: state.pollPosts.map((post) =>
-          post._id === postId
-            ? {
-                ...post,
-                likes: isLiked ? post.likes - 1 : post.likes + 1,
-                isLiked: !isLiked,
-              }
-            : post
-        ),
-      }));
-
-      return response.data;
+      return response.data; 
     } catch (error) {
       console.error(
         "Error liking the post:",
@@ -163,10 +148,16 @@ export const usePostStore = create((set) => ({
           post._id === updatedPost._id ? updatedPost : post
         );
 
+        const updatePostById =
+          state.post && state.post._id === updatedPost._id
+            ? updatedPost
+            : state.post;
+
         return {
           sectionPosts: updateSectionPost,
           trendingPosts: updatedTrendingPosts,
           posts: updatedAllPosts,
+          post: updatePostById,
         };
       });
     });

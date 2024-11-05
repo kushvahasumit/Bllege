@@ -43,7 +43,7 @@ const Feed = () => {
           posts && posts.length > 0 ? (
             posts.map((post) =>
               post && post._id ? (
-                <Post key={post._id} post={post} likePost={likePost} />
+                <Post key={post._id} post={post} likePost={likePost(user._id)} />
               ) : null
             )
           ) : (

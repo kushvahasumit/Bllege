@@ -108,18 +108,33 @@ export const deletePost = async (req, res) => {
 
 export const like = async (req, res) => {
   const { postId } = req.params;
+  const { userId } = req.body;
 
   try {
-    const post = await Post.findByIdAndUpdate(
-      postId,
-      { $inc: { likes: 1 } },
-      { new: true }
-    );
+    const post = await Post.findById(postId).populate("user");
     if (!post) return res.status(404).json({ message: "Post not found" });
 
-    req.io.emit("postLiked", post); 
+    if (!Array.isArray(post.likes)) {
+      post.likes = [];
+    }
 
-    res.status(200).json({ message: "Post liked!", post });
+    const isLiked = post.likes.includes(userId);
+
+    if (isLiked) {
+      post.likes = post.likes.filter(
+        (id) => id.toString() !== userId.toString()
+      );
+    } else {
+      post.likes.push(userId);
+    }
+
+    const updatedPost = await post.save();
+    req.io.emit("postLiked", updatedPost);
+
+    res.status(200).json({
+      message: isLiked ? "Post unliked!" : "Post liked!",
+      post: updatedPost, // Return the updated post
+    });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
