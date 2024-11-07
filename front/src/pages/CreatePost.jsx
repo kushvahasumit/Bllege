@@ -142,11 +142,19 @@ const CreatePost = () => {
               <option value="">Select Section</option>
               <option value="Tech">Tech</option>
               <option value="Cars">Cars</option>
-              <option value="HR">HR</option>
-              <option value="E-Commerce">E-Commerce</option>
+              <option value="College">College</option>
               <option value="AI-Trends">AI Trends</option>
               <option value="Start-Ups">Start-Ups</option>
+              <option value="Software-Engineering">Software Engineering</option>
               <option value="Health">Health</option>
+              <option value="Finance">Finance</option>
+              <option value="Stock-Investment">Stock & Investment</option>
+              <option value="Artificial-Intelligence">
+                Artificial Intelligence
+              </option>
+              <option value="Politics">Politics</option>
+              <option value="LGBTQ+">LGBTQ+</option>
+              <option value="Elon-Musk">Elon Musk</option>
             </select>
           </div>
 

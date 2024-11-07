@@ -7,18 +7,20 @@ import {
   Vote,
 } from "lucide-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../index.css";
+import { useAuthStore } from "../store/authStore";
 
 const LeftBar = () => {
-
-  const [selectedLink, setSelectedLink] = useState("/feed"); 
+  const {isAuthenticated} = useAuthStore();
+  const [selectedLink, setSelectedLink] = useState("/feed");
+   const navigate = useNavigate(); 
 
   const upperLinks = [
     { name: "Feed", to: "/feed", icon: <GalleryVerticalEndIcon /> },
-    { name: "My College", to: "/mycollege", icon: <Building2Icon /> },
     { name: "Polls", to: "/polls", icon: <Vote /> },
     { name: "Trending", to: "/trending", icon: <Flame /> },
+    { name: "My College", to: "/mycollege", icon: <Building2Icon /> },
     { name: "All Channels", to: "/channels", icon: <Shapes /> },
     { name: "Featured Content", to: "/featuredcontent", icon: <Award /> },
   ];
@@ -35,25 +37,31 @@ const LeftBar = () => {
     {
       title: "JOB GROUPS",
       links: [
-        { name: "Software Engineering", to: "/job-groups/software" },
-        { name: "Product Management", to: "/job-groups/product" },
-        { name: "Finance", to: "/job-groups/finance" },
+        {
+          name: "Software-Engineering",
+          to: "/job-groups/Software-Engineering",
+        },
+        { name: "Product-Management", to: "/job-groups/Product-Management" },
+        { name: "Finance", to: "/job-groups/Finance" },
       ],
     },
     {
       title: "GENERAL TOPICS",
       links: [
-        { name: "Stock & Investment", to: "/general/stock-investment" },
-        { name: "Artificial Intelligence", to: "/general/ai" },
-        { name: "Politics", to: "/general/politics" },
+        { name: "Stock-Investment", to: "/general/Stock-Investment" },
+        {
+          name: "Artificial-Intelligence",
+          to: "/general/Artificial-Intelligence",
+        },
+        { name: "Politics", to: "/general/Politics" },
+        { name: "College", to: "/general/College" },
       ],
     },
     {
       title: "USER LIKELY",
       links: [
-        { name: "Daily Workout", to: "/user-likely/workout" },
-        { name: "LGBTQ+", to: "/user-likely/lgbtq" },
-        { name: "Elon Musk", to: "/user-likely/elon-musk" },
+        { name: "LGBTQ+", to: "/user-likely/LGBTQ+" },
+        { name: "Elon-Musk", to: "/user-likely/Elon-Musk" },
         { name: "Show more...", to: "/general/more" },
         { name: "Show more...", to: "/general/more" },
       ],
@@ -61,7 +69,11 @@ const LeftBar = () => {
   ];
 
   const handleLinkClick = (to) => {
-    setSelectedLink(to);
+    if (to === "/mycollege" && !isAuthenticated) {
+      navigate("/sign-up");
+    } else {
+      setSelectedLink(to);
+    }
   };
 
   return (

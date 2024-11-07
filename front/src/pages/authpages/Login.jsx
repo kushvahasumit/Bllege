@@ -17,21 +17,15 @@ function Login() {
           .required("Required"),
       });
       
-      const handleSubmit = async (values, { resetForm }) => {
-
+      const handleSubmit = async (values) => {
         try {
           console.log("Email:", values.email);
-          console.log("Password:", values.password);
           setIsLoading(true);
           await logIn(values.email, values.password);
           setIsLoading(false);
         } catch (error) {
           console.log(error)
-        }
-       
-        
-
-      };
+        }};
   return (
     <>
       <div className="w-full h-full flex items-center justify-center">

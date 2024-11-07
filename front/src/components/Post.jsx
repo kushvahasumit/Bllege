@@ -51,10 +51,7 @@ const Post = ({ post, likePost }) => {
 
       setUserVote(optionIndex); // Update local state
       setVotesVisible(true); // Show the vote counts
-      toast.success("Vote recorded!", {
-        position: "top-left",
-        autoClose: 3000,
-      });
+
     } catch (error) {
       console.error(error);
       toast.error("Failed to record vote. Please try again.");

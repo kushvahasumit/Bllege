@@ -15,6 +15,10 @@ const ChatRoom = () => {
 console.log("chat Response", messages);
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+
     if (user && user.college) {
       joinRoom(user.college);
       listenForChatMessages();
@@ -23,7 +27,7 @@ console.log("chat Response", messages);
     return () => {
       socket.off("chatMessage");
     };
-  }, [user, joinRoom, listenForChatMessages]);
+  }, [user, navigate, joinRoom, listenForChatMessages]);
 
   // Scroll to the bottom of the chat when new messages arrive
   useEffect(() => {
@@ -51,7 +55,8 @@ console.log("chat Response", messages);
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#F9F9F9] border text-[#2E2E2E] rounded-lg">
+    user ? 
+    (<div className="flex flex-col h-screen bg-[#F9F9F9] border text-[#2E2E2E] rounded-lg">
       <div className="flex justify-between items-center p-4 rounded-t-lg bg-[#2E2E2E]">
         <h1 className="text-xl font-bold text-[#F9F9F9]">
           Join {user?.college} conversation
@@ -115,7 +120,7 @@ console.log("chat Response", messages);
           <MessageSquare className="mr-1" />
         </button>
       </div>
-    </div>
+    </div>) : null
   );
 };
 

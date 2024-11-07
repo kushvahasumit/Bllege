@@ -7,18 +7,20 @@ const MyCollege = () => {
   const [college, setCollege] = useState("");
   const navigate = useNavigate();
 
-  const handleCollegeSelect = (e) => {
-    const selectedCollege = e.target.value;
-    console.log(selectedCollege);
-    setCollege(selectedCollege);
-  };
-
   const handleJoinRoom = () => {
+    if(!user){
+      navigate("/login")
+    }
     if (user.college !== "New") {
       navigate("/chik-chat");
     }
   };
 
+  const handleCollegeSelect = (e) => {
+    const selectedCollege = e.target.value;
+    console.log(selectedCollege);
+    setCollege(selectedCollege);
+  };
 
   const handleCollegeUpdate = () => {
     if (user && user.email) {
@@ -48,9 +50,9 @@ const MyCollege = () => {
         </h2>
 
         <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-          {user.college === "New"
+          { user.college === "New"
             ? "Select Your College to Start"
-            : `Join your batchmates in ${user.college} internal discussion`}
+            : `Join your batchmates in ${user.college || "new" } internal discussion`}
         </h1>
 
         {user && user.college === "New" ? (

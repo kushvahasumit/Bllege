@@ -36,10 +36,13 @@ const RightBar = () => {
       to: "/Blind-Thoughts/Health",
     },
     {
-      title: "in next 5 year E-Commerce Boom at 50%",
-      to: "/Blind-Thoughts/E-Commerce",
+      title: "Which university is better GEU or Gehu?",
+      to: "/Blind-Thoughts/College",
     },
-    { title: "AI Trends is hot now a days", to: "/Blind-Thoughts/AI-Trends" },
+    {
+      title: "AI Trends is hot now a days",
+      to: "/Blind-Thoughts/Artificial-Intelligence",
+    },
     { title: "Best startup for Placements?", to: "/Blind-Thoughts/Start-Ups" },
   ];
 

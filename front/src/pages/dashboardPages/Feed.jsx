@@ -28,16 +28,25 @@ const Feed = () => {
     error,
   } = usePostStore();
   const navigate = useNavigate();
-  const {user} = useAuthStore();
+  const {user,isAuthenticated} = useAuthStore();
 
   useEffect(() => {
     fetchAllPost();
     listenForPostLikes();
   }, [fetchAllPost, listenForPostLikes]);
 
+  const handleStartPost = (value)=>{
+    if(value === "/createpost" && !isAuthenticated){
+      navigate("/sign-up");
+    }else{
+      navigate(value);
+    }
+
+  }
+
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <StartPost onClick={() => navigate("/createpost")} />
+      <StartPost onClick={() => handleStartPost("/createpost")} />
       <div className="mt-6 mb-20 overflow-y-auto h-[calc(75vh-5px)] custom-scrollbar">
         {isLoading && <p>Loading posts...</p>}
         {error && <p>Error loading posts: {error}</p>}
