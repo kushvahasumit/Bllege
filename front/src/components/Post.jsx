@@ -17,7 +17,7 @@ const Post = ({ post, likePost }) => {
   const [votesVisible, setVotesVisible] = useState(false);
   const navigate = useNavigate();
 
-  const API_URL = "http://localhost:5000";
+  const API_URL = "https://bllege.onrender.com";
   useEffect(() => {
     const fetchVote = async () => {
       const vote = await getVote(post._id);
@@ -59,7 +59,7 @@ const Post = ({ post, likePost }) => {
   };
 
   const handleShareClick = () => {
-    const linkToCopy = `http://localhost:5173/post/${post._id}/comment`;
+    const linkToCopy = `https://bllege.netlify.app/post/${post._id}/comment`;
     navigator.clipboard
       .writeText(linkToCopy)
       .then(() => {

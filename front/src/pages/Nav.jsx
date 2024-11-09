@@ -10,6 +10,7 @@ import {
   UserCircle,
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
+import bgrsmImage from "../images/bgrsm.png";
 
 const Nav = ({ user, logOut }) => {
   const navLinks = [
@@ -56,11 +57,7 @@ const Nav = ({ user, logOut }) => {
     <nav className="shadow-md px-6 py-2 flex items-center space-x-4">
       <div className="flex items-center">
         <a href="/">
-          <img
-            src="./src/images/bgrsm.png"
-            alt="Bllege"
-            className="h-12 w-14"
-          />
+          <img src={bgrsmImage} alt="Bllege" className="h-12 w-14" />
         </a>
       </div>
 
