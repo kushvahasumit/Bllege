@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://bllege.onrender.com";
 const socket = io(API_URL, {
   transports: ["websocket"],
   reconnection: true,
