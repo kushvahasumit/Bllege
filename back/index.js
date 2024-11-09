@@ -11,12 +11,13 @@ import cors from 'cors';
 configDotenv();
 const app = express();
 const server = http.createServer(app); 
+const CLIENT_ORIGIN = process.env.RESET_URL || "http://localhost:5173";
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: CLIENT_ORIGIN,
     methods: ["GET", "POST"],
     credentials: true,
-  }
+  },
 });
 
 const attachSocketIO = (req, res, next) => {
@@ -26,7 +27,7 @@ const attachSocketIO = (req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: CLIENT_ORIGIN, credentials: true }));
 
 app.use(express.json());
 app.use(cookieParser());
