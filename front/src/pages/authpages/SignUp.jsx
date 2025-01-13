@@ -54,12 +54,12 @@ function SignupForm() {
           {() => (
             <Form className="p-4 max-w-sm w-full">
               <h2 className="text-3xl font-bold mb-6">Sign Up for Bllege</h2>
-              <p className="text-base mb-4">
+              <p className="text-base mb-1">
                 For testing, use the following credentials:
               </p>
-              <ul className="list-disc pl-6">
+              <ul className="list-disc pl-6 mb-4">
                 <li>
-                  <strong>Email:</strong> aprilsamy1@sitp.ac.in
+                  <strong>Email:</strong> aprilsamy1@sitp.com
                 </li>
                 <li>
                   <strong>Password:</strong> 123456

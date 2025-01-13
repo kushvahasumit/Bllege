@@ -73,7 +73,7 @@ function App() {
 
   console.log("isAuthenticated:", isAuthenticated);
   console.log("isCheckAuthenticated:", isCheckAuthenticated);
-  console.log("user:", user);
+  // console.log("user:", user);
 
   if (isCheckAuthenticated) return <LoadingSpinner />;
 
