@@ -82,7 +82,7 @@ function App() {
     );
 
   return (
-    <div className="h-screen flex bg-offWhite text-black overflow-hidden">
+    <div className="h-screen flex bg-offwhite text-black overflow-hidden">
       <div className="w-full">
         {!isAuthRoute && <Nav user={user} logOut={logOut} />}
         <ToastContainer
