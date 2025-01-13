@@ -20,7 +20,7 @@ export const useAuthStore = create((set) => ({
         email,
         password,
       });
-      console.log(response);
+      // console.log(response);
       set({
         user: response.data.user,
         isAuthenticated: true,
@@ -43,7 +43,7 @@ export const useAuthStore = create((set) => ({
         email,
         password,
       });
-      console.log(response);
+      // console.log(response);
       set({
         user: response.data.user,
         isAuthenticated: true,
@@ -81,7 +81,7 @@ export const useAuthStore = create((set) => ({
       const response = await axios.post(`${API_URL}/verify-email`, {
         emailCode,
       });
-      console.log("Emailverification response", response);
+      // console.log("Emailverification response", response);
       set({
         user: response.data.user,
         isAuthenticated: true,
@@ -101,7 +101,7 @@ export const useAuthStore = create((set) => ({
     set({ isCheckAuthenticated: true, error: null });
     try {
       const response = await axios.get(`${API_URL}//check-auth`);
-      console.log(response);
+      // console.log(response);
       set({
         user: response.data.user,
         isAuthenticated: true,
@@ -123,7 +123,7 @@ export const useAuthStore = create((set) => ({
       const response = await axios.post(`${API_URL}/forget-password`, {
         email,
       });
-      console.log(response);
+      // console.log(response);
       set({
         message: response.data.message,
         isLoading: false,
@@ -146,7 +146,7 @@ export const useAuthStore = create((set) => ({
           password,
         }
       );
-      console.log(response);
+      // console.log(response);
       set({
         message: response.data.message,
         isLoading: false,
@@ -167,7 +167,7 @@ export const useAuthStore = create((set) => ({
         userId,
         collegeName,
       });
-      console.log(response)
+      // console.log(response)
       set({ user: response.data.user, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });

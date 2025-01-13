@@ -27,7 +27,7 @@ export const usePostStore = create((set) => ({
 
     try {
       const response = await axios.get(`${API_URL}/api/post/getAllPosts`);
-      console.log("fethed all Posts", response.data);
+      // console.log("fethed all Posts", response.data);
       set({ posts: response.data, isLoading: false });
     } catch (error) {
       set({
@@ -72,13 +72,13 @@ export const usePostStore = create((set) => ({
         content: !isPoll ? content : undefined,
       };
 
-      console.log("Post Data:", handleLoad);
+      // console.log("Post Data:", handleLoad);
 
       const response = await axios.post(
         `${API_URL}/api/post/createPost`,
         postData
       );
-      console.log("Response Data:", response.data);
+      // console.log("Response Data:", response.data);
       set((state) => ({
         posts: [response.data.post, ...state.posts],
         loading: false,
@@ -268,7 +268,7 @@ export const usePostStore = create((set) => ({
       const response = await axios.get(
         `${API_URL}/api/post/getUserPosts/${userId}`
       );
-      console.log("thissi res ", response.data);
+      // console.log("thissi res ", response.data);
       set({ myPosts: response.data, isLoading: false });
     } catch (error) {
       set({
@@ -282,7 +282,7 @@ export const usePostStore = create((set) => ({
     console.log(postId);
     try {
       const response = await axios.delete(`${API_URL}/api/post/${postId}`);
-      console.log(response.data);
+      // console.log(response.data);
 
       return response.data;
     } catch (error) {
