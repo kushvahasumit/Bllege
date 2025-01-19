@@ -1,31 +1,38 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import SignupPage from "./pages/authpages/SignUp";
-import Login from "./pages/authpages/Login";
-import EmailVerification from "./pages/authpages/EmailVerification";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
-import Dashboard from "./pages/Dashboard";
 import LoadingSpinner from "./components/LoadingSpinner";
-import ForgetPassword from "./pages/authpages/ForgetPassword";
-import Resetpass from "./pages/authpages/Resetpass";
-import ImageCarousel from "./components/ImageCarousel";
-import Feed from "./pages/dashboardPages/Feed";
-import Trending from "./pages/dashboardPages/Trending";
-import AllChannels from "./pages/dashboardPages/AllChannels";
-import FeaturedContents from "./pages/dashboardPages/FeaturedContents";
-import MyCollege from "./pages/dashboardPages/MyCollege";
-import Polls from "./pages/dashboardPages/Polls";
-import CreatePost from "./pages/CreatePost";
-import SectionPost from "./pages/dashboardPages/SectionPost";
-import ChatRoom from "./pages/dashboardPages/ChatRoom";
-import Faq from "./pages/Faq";
-import Placement from "./pages/navPages/Placement";
-import Review from "./pages/navPages/Review";
-import Trends from "./pages/navPages/Trends";
-import Nav from "./pages/Nav";
-import CommentPage from "./pages/dashboardPages/CommentPage";
 import { ToastContainer } from "react-toastify";
-import MyPost from "./pages/dashboardPages/MyPost";
+import { Suspense, lazy } from "react";
+
+// Lazy load components
+const SignupPage = lazy(() => import("./pages/authpages/SignUp"));
+const Login = lazy(() => import("./pages/authpages/Login"));
+const EmailVerification = lazy(() =>
+  import("./pages/authpages/EmailVerification")
+);
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const ForgetPassword = lazy(() => import("./pages/authpages/ForgetPassword"));
+const Resetpass = lazy(() => import("./pages/authpages/Resetpass"));
+const ImageCarousel = lazy(() => import("./components/ImageCarousel"));
+const Feed = lazy(() => import("./pages/dashboardPages/Feed"));
+const Trending = lazy(() => import("./pages/dashboardPages/Trending"));
+const AllChannels = lazy(() => import("./pages/dashboardPages/AllChannels"));
+const FeaturedContents = lazy(() =>
+  import("./pages/dashboardPages/FeaturedContents")
+);
+const MyCollege = lazy(() => import("./pages/dashboardPages/MyCollege"));
+const Polls = lazy(() => import("./pages/dashboardPages/Polls"));
+const CreatePost = lazy(() => import("./pages/CreatePost"));
+const SectionPost = lazy(() => import("./pages/dashboardPages/SectionPost"));
+const ChatRoom = lazy(() => import("./pages/dashboardPages/ChatRoom"));
+const Faq = lazy(() => import("./pages/Faq"));
+const Placement = lazy(() => import("./pages/navPages/Placement"));
+const Review = lazy(() => import("./pages/navPages/Review"));
+const Trends = lazy(() => import("./pages/navPages/Trends"));
+import Nav from "./pages/Nav";
+const CommentPage = lazy(() => import("./pages/dashboardPages/CommentPage"));
+const MyPost = lazy(() => import("./pages/dashboardPages/MyPost"));
 
 const authRoutes = [
   "/sign-up",
@@ -34,6 +41,7 @@ const authRoutes = [
   "/email-verification",
   "/reset-password/:token",
 ];
+
 // Redirect if the user is authenticated and verified
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -53,12 +61,10 @@ const ProtectAuthenticatedUser = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  // If authenticated but not verified, redirect to email verification
   if (!user?.isVerified) {
     return <Navigate to="/email-verification" replace />;
   }
 
-  // If authenticated and verified, render the children
   return children;
 };
 
@@ -71,20 +77,18 @@ function App() {
     checkUserAuth(); // Check authentication on app load
   }, [checkUserAuth]);
 
-  console.log("isAuthenticated:", isAuthenticated);
-  console.log("isCheckAuthenticated:", isCheckAuthenticated);
-  // console.log("user:", user);
+  // if (isCheckAuthenticated) return <LoadingSpinner />;
 
-  if (isCheckAuthenticated) return <LoadingSpinner />;
-
-    const isAuthRoute = authRoutes.some((path) =>
-      location.pathname.startsWith(path)
-    );
+  const isAuthRoute = authRoutes.some((path) =>
+    location.pathname.startsWith(path)
+  );
 
   return (
     <div className="h-screen flex bg-offwhite text-black overflow-hidden">
       <div className="w-full">
-        {!isAuthRoute && <Nav user={user} logOut={logOut} />}
+        {!isAuthRoute && (
+            <Nav user={user} logOut={logOut} />
+        )}
         <ToastContainer
           autoClose={3000}
           hideProgressBar={true}
@@ -93,65 +97,190 @@ function App() {
           pauseOnHover
         />
         <Routes>
-          <Route path="/" element={<Dashboard />}>
-            <Route index element={<Feed />} />
-            <Route path="feed" element={<Feed />} />
-            <Route path="mycollege" element={<MyCollege />} />
-            <Route path="chik-chat" element={<ChatRoom />} />
-            <Route path="polls" element={<Polls />} />
-            <Route path="channels" element={<AllChannels />} />
-            <Route path="featuredcontent" element={<FeaturedContents />} />
-            <Route path="trending" element={<Trending />} />
-            <Route path="createpost" element={<CreatePost />} />
-            <Route path="/:sectionhead/:section" element={<SectionPost />} />
-            <Route path="why-bllege-blog-carrer-news-faq" element={<Faq />} />
-            <Route path="post/:postId/comment" element={<CommentPage />} />
-            <Route path="myprofile/activity/post" element={<MyPost />} />
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <Dashboard />
+              </Suspense>
+            }
+          >
+            <Route
+              index
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Feed />
+                </Suspense>
+              }
+            />
+            <Route
+              path="feed"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Feed />
+                </Suspense>
+              }
+            />
+            <Route
+              path="mycollege"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <MyCollege />
+                </Suspense>
+              }
+            />
+            <Route
+              path="chik-chat"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <ChatRoom />
+                </Suspense>
+              }
+            />
+            <Route
+              path="polls"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Polls />
+                </Suspense>
+              }
+            />
+            <Route
+              path="channels"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <AllChannels />
+                </Suspense>
+              }
+            />
+            <Route
+              path="featuredcontent"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <FeaturedContents />
+                </Suspense>
+              }
+            />
+            <Route
+              path="trending"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Trending />
+                </Suspense>
+              }
+            />
+            <Route
+              path="createpost"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <CreatePost />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/:sectionhead/:section"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <SectionPost />
+                </Suspense>
+              }
+            />
+            <Route
+              path="why-bllege-blog-carrer-news-faq"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Faq />
+                </Suspense>
+              }
+            />
+            <Route
+              path="post/:postId/comment"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <CommentPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="myprofile/activity/post"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <MyPost />
+                </Suspense>
+              }
+            />
           </Route>
-          <Route path="/placements" element={<Placement />} />
-          <Route path="/reviews" element={<Review />} />
-          <Route path="/trends" element={<Trends />} />
+          <Route
+            path="/placements"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <Placement />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/reviews"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <Review />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/trends"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <Trends />
+              </Suspense>
+            }
+          />
           <Route
             path="/sign-up"
             element={
               <RedirectAuthenticatedUser>
-                <SignupPage />
+                <Suspense fallback={<LoadingSpinner />}>
+                  <SignupPage />
+                </Suspense>
               </RedirectAuthenticatedUser>
             }
           />
-
           <Route
             path="/login"
             element={
               <RedirectAuthenticatedUser>
-                <Login />
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Login />
+                </Suspense>
               </RedirectAuthenticatedUser>
             }
           />
-
           <Route
             path="/email-verification"
             element={
               <ProtectAuthenticatedUser>
-                <EmailVerification />
+                <Suspense fallback={<LoadingSpinner />}>
+                  <EmailVerification />
+                </Suspense>
               </ProtectAuthenticatedUser>
             }
           />
-
           <Route
             path="/forget-password"
             element={
               <RedirectAuthenticatedUser>
-                <ForgetPassword />
+                <Suspense fallback={<LoadingSpinner />}>
+                  <ForgetPassword />
+                </Suspense>
               </RedirectAuthenticatedUser>
             }
           />
-
           <Route
             path="/reset-password/:token"
             element={
               <RedirectAuthenticatedUser>
-                <Resetpass />
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Resetpass />
+                </Suspense>
               </RedirectAuthenticatedUser>
             }
           />
@@ -160,7 +289,9 @@ function App() {
 
       {isAuthRoute && (
         <div className="w-2/3 hidden sm:hidden md:block">
-          <ImageCarousel />
+          <Suspense fallback={<div>Loading Image Carousel...</div>}>
+            <ImageCarousel />
+          </Suspense>
         </div>
       )}
     </div>
