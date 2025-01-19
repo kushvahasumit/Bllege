@@ -33,6 +33,7 @@ const Trends = lazy(() => import("./pages/navPages/Trends"));
 import Nav from "./pages/Nav";
 const CommentPage = lazy(() => import("./pages/dashboardPages/CommentPage"));
 const MyPost = lazy(() => import("./pages/dashboardPages/MyPost"));
+const PopupCard = lazy( () => import("./components/PopupCard") );
 
 const authRoutes = [
   "/sign-up",
@@ -84,11 +85,9 @@ function App() {
   );
 
   return (
-    <div className="h-screen flex bg-offwhite text-black overflow-hidden">
+    <div className="h-screen flex bg-oFFWhite text-black overflow-hidden">
       <div className="w-full">
-        {!isAuthRoute && (
-            <Nav user={user} logOut={logOut} />
-        )}
+        {!isAuthRoute && <Nav user={user} logOut={logOut} />}
         <ToastContainer
           autoClose={3000}
           hideProgressBar={true}
@@ -286,6 +285,8 @@ function App() {
           />
         </Routes>
       </div>
+
+
 
       {isAuthRoute && (
         <div className="w-2/3 hidden sm:hidden md:block">

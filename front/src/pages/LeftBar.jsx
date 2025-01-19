@@ -70,7 +70,7 @@ const LeftBar = () => {
 
   const handleLinkClick = (to) => {
     if (to === "/mycollege" && !isAuthenticated) {
-      navigate("/sign-up");
+      navigate("/login");
     } else {
       setSelectedLink(to);
     }

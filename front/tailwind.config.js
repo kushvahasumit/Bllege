@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         offWhite: "#FFFFF2",
+        oFFWhite: "#FAF9F6",
         ofFwhite: "#FFFFF4",
         oFFwhite: "#fbf7f5",
         offwhite: "#F4F4F2",
