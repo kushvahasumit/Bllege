@@ -28,7 +28,7 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center ">
+    <div className="w-full p-4 h-full flex justify-center items-center ">
       <div className="">
         {!isSubmit ? (
           <Formik
