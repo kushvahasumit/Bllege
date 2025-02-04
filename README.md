@@ -6,6 +6,10 @@ Welcome to Bllege! This platform is designed to provide college students with a 
 
 [Visit Bllege](https://bllege.netlify.app/)
 
+## Video Demo
+
+[Visit Bllege](https://www.linkedin.com/posts/sumit-kumar-4a1344254_bllegeapp-collegestudents-anonymousplatform-activity-7261037337894166528-ysoH?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD6yxbkBacsZo7lxj1ccsSgJrMLVTmqpaK8)
+
 ## Overview
 
 Bllege is an innovative platform where verified college students can:
