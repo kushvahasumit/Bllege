@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test'
 import { describe } from 'node:test';
 const testdata = JSON.parse(JSON.stringify(require('../testdata.json')))
 
-describe("my all bllege test", () => {
+describe("should verify login/logout and post creation", () => {
   
   test.beforeEach(async ({ page }) => {
     await page.goto("https://bllege.netlify.app");
@@ -35,9 +35,9 @@ describe("my all bllege test", () => {
     
     await page.getByLabel("Section").click();
     await page.getByRole("textbox", { name: "Topic" }).click();
-    await page.getByRole("textbox", { name: "Topic" }).fill("This is my first poll");
+    await page.getByRole("textbox", { name: "Topic" }).fill("My First post");
     await page.getByRole("textbox", { name: "Content" }).click();
-    await page.getByRole("textbox", { name: "Content" }).fill("This is poll description");
+    await page.getByRole("textbox", { name: "Content" }).fill("This is post description");
     await page.getByRole("button", { name: "Create Post" }).click();
     await page.locator(".lucide.lucide-circle-user").click();
     await page.getByRole("button", { name: "Logout" }).click();
