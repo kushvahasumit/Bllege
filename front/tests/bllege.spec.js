@@ -30,14 +30,14 @@ describe("my all bllege test", () => {
       .locator("div")
       .filter({ hasText: /^Start a Post \.\.\.$/ })
       .click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(6000);
     await page.getByLabel("Section").selectOption("Artificial-Intelligence");
     
     await page.getByLabel("Section").click();
     await page.getByRole("textbox", { name: "Topic" }).click();
-    await page.getByRole("textbox", { name: "Topic" }).fill("ssssss");
+    await page.getByRole("textbox", { name: "Topic" }).fill("This is my first poll");
     await page.getByRole("textbox", { name: "Content" }).click();
-    await page.getByRole("textbox", { name: "Content" }).fill("sssss");
+    await page.getByRole("textbox", { name: "Content" }).fill("This is poll description");
     await page.getByRole("button", { name: "Create Post" }).click();
     await page.locator(".lucide.lucide-circle-user").click();
     await page.getByRole("button", { name: "Logout" }).click();

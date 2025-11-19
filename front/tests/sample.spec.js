@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 
+// just for checking purpose
 test("my first test", function () {
   console.log("chlgya re");
 });
