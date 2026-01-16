@@ -1,7 +1,7 @@
 import {create} from 'zustand'; //state management lib
-import axios from 'axios'; // avoide the use of fetch for making api call
-
-const API_URL = "https://bllege.onrender.com/api/auth";
+import axios from 'axios'; 
+// avoide the use of fetch for making api call
+const API_URL = import.meta.env.VITE_API_URL;
 
 axios.defaults.withCredentials = true;
 export const useAuthStore = create((set) => ({
