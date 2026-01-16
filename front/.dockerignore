@@ -1,0 +1,24 @@
+# Node
+
+node_modules
+
+# Vite / build
+
+dist
+.vite
+
+# Env
+
+.env
+.env.\*
+!.env.production
+
+# Git
+
+.git
+.gitignore
+
+# Docker
+
+Dockerfile
+docker-compose.yml
