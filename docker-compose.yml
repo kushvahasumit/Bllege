@@ -1,0 +1,29 @@
+networks:
+  bllege-network:
+    driver: bridge
+
+services:
+  bllege-api:
+    build: ./back
+    container_name: bllege-api
+    restart: unless-stopped
+    env_file: ./back/.env
+    ports:
+      - '1200:3000'
+    networks:
+      - bllege-network
+
+  bllege-website:
+    build:
+      context: ./front
+      args:
+        - VITE_API_URL=${VITE_API_BASE_URL}/api/auth
+        - VITE_SOCKET_URL=${VITE_API_BASE_URL}
+    container_name: bllege-website
+    restart: unless-stopped
+    ports:
+      - '3200:80'
+    depends_on:
+      - bllege-api
+    networks:
+      - bllege-network
