@@ -7,8 +7,10 @@ Welcome to Bllege! This platform is designed to provide college students with a 
 [Visit Bllege](https://bllege.netlify.app/)
 
 ## Video Demo
-
 [Visit Bllege](https://www.linkedin.com/posts/sumit-kumar-4a1344254_bllegeapp-collegestudents-anonymousplatform-activity-7261037337894166528-ysoH?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD6yxbkBacsZo7lxj1ccsSgJrMLVTmqpaK8)
+
+## CI/CD Demo
+[Visit Bllege](https://www.linkedin.com/posts/sumit-kushwaha-4a1344254_devops-docker-dockercompose-activity-7418420599410200576--_5g?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD6yxbkBacsZo7lxj1ccsSgJrMLVTmqpaK8)
 
 ## Overview
 
@@ -58,52 +60,3 @@ By requiring verified college email addresses for portal login, Bllege ensures o
 - Find insider information about companies before applying.
 
 ---
-
-## Installation and Setup
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- Git
-- College email for verification (for testing the platform)
-
-### Steps
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/bllege.git
-   cd bllege
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-
-   ```bash
-   npm start
-   ```
-
-4. Open the application in your browser:
-   ```
-   http://localhost:3000
-   ```
-
----
-
-## Contributing
-
-We welcome contributions from the community! To contribute:
-
-1. Fork the repository.
-2. Create a new branch for your feature/fix.
-3. Commit your changes and push them to your fork.
-4. Create a pull request to the `main` branch of this repository.
-
-check webhook
-
-- Website: [Bllege](https://bllege.netlify.app/)
