@@ -24,6 +24,7 @@ pipeline {
       steps {
         sh '''
         docker-compose down
+        export VITE_API_BASE_URL=$VITE_API_BASE_URL
         docker-compose up -d --build
         '''
       }
@@ -41,7 +42,7 @@ pipeline {
     stage('Test against container') {
         steps {
             sh '''
-            curl http://http://ip-address:1200
+            curl http://ip-address:1200
             '''
         }
     }
